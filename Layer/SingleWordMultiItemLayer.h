@@ -15,13 +15,4 @@ public:
     int getLayerSize();
 };
 
-template<class T> T SingleWordMultiItemLayer<T>::getItemAt(int index) {
-    return items.at(index);
-}
-
-template<class T> int SingleWordMultiItemLayer<T>::getLayerSize() {
-    return items.size();
-}
-
-
 #endif //ANNOTATEDTREE_SINGLEWORDMULTIITEMLAYER_H

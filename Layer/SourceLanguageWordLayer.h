@@ -13,9 +13,4 @@ public:
     explicit SourceLanguageWordLayer(const string& layerValue);
 };
 
-SourceLanguageWordLayer::SourceLanguageWordLayer(const string& layerValue) {
-    setLayerValue(layerValue);
-}
-
-
 #endif //ANNOTATEDTREE_SOURCELANGUAGEWORDLAYER_H
