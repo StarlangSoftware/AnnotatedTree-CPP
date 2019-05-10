@@ -69,3 +69,25 @@ string MorphologicalAnalysisLayer::getLayerInfoAt(ViewLayerType viewLayer, int i
     return "";
 }
 
+bool MorphologicalAnalysisLayer::isVerbal() {
+    string dbLabel = "^DB+";
+    string needle = "VERB+";
+    string haystack;
+    if (layerValue.find(dbLabel) != string::npos)
+        haystack = layerValue.substr(layerValue.find_last_of(dbLabel) + 4);
+    else
+        haystack = layerValue;
+    return haystack.find(needle) != string::npos;
+}
+
+bool MorphologicalAnalysisLayer::isNominal() {
+    string dbLabel = "^DB+VERB+";
+    string needle = "ZERO+";
+    string haystack;
+    if (layerValue.find(dbLabel) != string::npos)
+        haystack = layerValue.substr(layerValue.find_last_of(dbLabel) + 9);
+    else
+        haystack = layerValue;
+    return haystack.find(needle) != string::npos;
+}
+

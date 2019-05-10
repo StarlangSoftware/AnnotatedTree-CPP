@@ -16,6 +16,8 @@ public:
     void setLayerValue(MorphologicalParse parse);
     int getLayerSize(ViewLayerType viewLayer) override;
     string getLayerInfoAt(ViewLayerType viewLayer, int index) override;
+    bool isVerbal();
+    bool isNominal();
 };
 
 #endif //ANNOTATEDTREE_MORPHOLOGICALANALYSISLAYER_H
