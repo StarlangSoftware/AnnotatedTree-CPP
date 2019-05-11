@@ -126,6 +126,8 @@ void LayerInfo::setLayerData(ViewLayerType viewLayer, string layerValue) {
         case ViewLayerType::SHALLOW_PARSE:
             layers.emplace(ViewLayerType::SHALLOW_PARSE, new ShallowParseLayer(layerValue));
             break;
+        default:
+            break;
     }
 }
 
@@ -165,6 +167,8 @@ ViewLayerType LayerInfo::checkLayer(ViewLayerType viewLayer) {
             if (layers.find(viewLayer) == layers.end())
                 return checkLayer(ViewLayerType::META_MORPHEME);
             break;
+        default:
+            break;
     }
     return viewLayer;
 }
@@ -177,6 +181,7 @@ int LayerInfo::getNumberOfWords() {
             return ((PersianWordLayer*) (layers.find(ViewLayerType::PERSIAN_WORD)->second))->size();
         }
     }
+    return 0;
 }
 
 string LayerInfo::getMultiWordAt(ViewLayerType viewLayerType, int index, string layerName) {
@@ -190,6 +195,7 @@ string LayerInfo::getMultiWordAt(ViewLayerType viewLayerType, int index, string 
                 }
             }
     }
+    return "";
 }
 
 string LayerInfo::getTurkishWordAt(int index) {
@@ -210,4 +216,211 @@ string LayerInfo::getSemanticAt(int index) {
 
 string LayerInfo::getShallowParseAt(int index) {
     return getMultiWordAt(ViewLayerType::SHALLOW_PARSE, index, "shallowParse");
+}
+
+Argument LayerInfo::getArgument() {
+    if (layers.find(ViewLayerType::PROPBANK) != layers.end()){
+        TurkishPropbankLayer* argumentLayer = (TurkishPropbankLayer*) layers.find(ViewLayerType::PROPBANK)->second;
+        return argumentLayer->getArgument();
+    }
+}
+
+Argument LayerInfo::getArgumentAt(int index) {
+    if (layers.find(ViewLayerType::ENGLISH_PROPBANK) != layers.end()){
+        SingleWordMultiItemLayer<Argument>* multiArgumentLayer = (SingleWordMultiItemLayer<Argument>*) layers.find(ViewLayerType::ENGLISH_PROPBANK)->second;
+        return multiArgumentLayer->getItemAt(index);
+    }
+}
+
+MorphologicalParse LayerInfo::getMorphologicalParseAt(int index) {
+    if (layers.find(ViewLayerType::INFLECTIONAL_GROUP) != layers.end()){
+        MultiWordLayer<MorphologicalParse>* multiWordLayer = (MultiWordLayer<MorphologicalParse>*) layers.find(ViewLayerType::INFLECTIONAL_GROUP)->second;
+        if (index < multiWordLayer->size() && index >= 0){
+            return multiWordLayer->getItemAt(index);
+        }
+    }
+}
+
+MetamorphicParse LayerInfo::getMetamorphicParseAt(int index) {
+    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+        MultiWordLayer<MetamorphicParse>* multiWordLayer = (MultiWordLayer<MetamorphicParse>*) layers.find(ViewLayerType::META_MORPHEME)->second;
+        if (index < multiWordLayer->size() && index >= 0){
+            return multiWordLayer->getItemAt(index);
+        }
+    }
+}
+
+string LayerInfo::getMetaMorphemeAtIndex(int index) {
+    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+        MetaMorphemeLayer* metaMorphemeLayer = (MetaMorphemeLayer*) layers.find(ViewLayerType::META_MORPHEME)->second;
+        if (index < metaMorphemeLayer->getLayerSize(ViewLayerType::META_MORPHEME) && index >= 0){
+            return metaMorphemeLayer->getLayerInfoAt(ViewLayerType::META_MORPHEME, index);
+        }
+    }
+    return "";
+}
+
+string LayerInfo::getMetaMorphemeFromIndex(int index) {
+    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+        MetaMorphemeLayer* metaMorphemeLayer = (MetaMorphemeLayer*) layers.find(ViewLayerType::META_MORPHEME)->second;
+        if (index < metaMorphemeLayer->getLayerSize(ViewLayerType::META_MORPHEME) && index >= 0){
+            return metaMorphemeLayer->getLayerInfoFrom(index);
+        }
+    }
+    return "";
+}
+
+int LayerInfo::getLayerSize(ViewLayerType viewLayer) {
+    switch (viewLayer){
+        case ViewLayerType::META_MORPHEME_MOVED:
+        case ViewLayerType::META_MORPHEME:
+            return ((MultiWordMultiItemLayer<MetamorphicParse>*) layers.find(viewLayer)->second)->getLayerSize(viewLayer);
+        case ViewLayerType::PART_OF_SPEECH:
+        case ViewLayerType::INFLECTIONAL_GROUP:
+            return ((MultiWordMultiItemLayer<MorphologicalParse>*) layers.find(viewLayer)->second)->getLayerSize(viewLayer);
+        case ViewLayerType::ENGLISH_PROPBANK:
+            return ((SingleWordMultiItemLayer<Argument>*) layers.find(viewLayer)->second)->getLayerSize();
+        default:
+            return 0;
+    }
+}
+
+string LayerInfo::getLayerInfoAt(ViewLayerType viewLayer, int index) {
+    switch (viewLayer){
+        case ViewLayerType::META_MORPHEME_MOVED:
+            return ((MultiWordMultiItemLayer<MetamorphicParse>*) layers.find(viewLayer)->second)->getLayerInfoAt(viewLayer, index);
+        case ViewLayerType::PART_OF_SPEECH:
+        case ViewLayerType::INFLECTIONAL_GROUP:
+            return ((MultiWordMultiItemLayer<MorphologicalParse>*) layers.find(viewLayer)->second)->getLayerInfoAt(viewLayer, index);
+        case ViewLayerType::META_MORPHEME:
+            return getMetaMorphemeAtIndex(index);
+        case ViewLayerType::ENGLISH_PROPBANK:
+            return getArgumentAt(index).getArgumentType();
+        default:
+            return "";
+    }
+}
+
+string LayerInfo::getLayerDescription() {
+    string result;
+    map<ViewLayerType, WordLayer*>::iterator layerIterator;
+    for (layerIterator = layers.begin(); layerIterator != layers.end(); layerIterator++){
+        if (layerIterator->first != ViewLayerType::PART_OF_SPEECH){
+            result += layerIterator->second->getLayerDescription();
+        }
+    }
+    return result;
+}
+
+string LayerInfo::getLayerData(ViewLayerType viewLayer) {
+    if (layers.find(viewLayer) != layers.end()){
+        return layers.find(viewLayer)->second->getLayerValue();
+    } else {
+        return "";
+    }
+}
+
+string LayerInfo::getRobustLayerData(ViewLayerType viewLayer) {
+    viewLayer = checkLayer(viewLayer);
+    return getLayerData(viewLayer);
+}
+
+void LayerInfo::updateMetaMorphemesMoved() {
+    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+        MetaMorphemeLayer* metaMorphemeLayer = (MetaMorphemeLayer*) layers.find(ViewLayerType::META_MORPHEME)->second;
+        if (metaMorphemeLayer->size() > 0){
+            string result = metaMorphemeLayer->getItemAt(0).to_string();
+            for (int i = 1; i < metaMorphemeLayer->size(); i++){
+                result += " " + metaMorphemeLayer->getItemAt(i).to_string();
+            }
+            layers.insert_or_assign(ViewLayerType::META_MORPHEME_MOVED, new MetaMorphemesMovedLayer(result));
+        }
+    }
+}
+
+void LayerInfo::removeLayer(ViewLayerType layerType) {
+    layers.erase(layerType);
+}
+
+void LayerInfo::metaMorphemeClear() {
+    layers.erase(ViewLayerType::META_MORPHEME);
+    layers.erase(ViewLayerType::META_MORPHEME_MOVED);
+}
+
+void LayerInfo::englishClear() {
+    layers.erase(ViewLayerType::ENGLISH_WORD);
+}
+
+void LayerInfo::dependencyClear() {
+    layers.erase(ViewLayerType::DEPENDENCY);
+}
+
+void LayerInfo::metaMorphemesMovedClear() {
+    layers.erase(ViewLayerType::META_MORPHEME_MOVED);
+}
+
+void LayerInfo::semanticClear() {
+    layers.erase(ViewLayerType::SEMANTICS);
+}
+
+void LayerInfo::englishSemanticClear() {
+    layers.erase(ViewLayerType::ENGLISH_SEMANTICS);
+}
+
+void LayerInfo::morphologicalAnalysisClear() {
+    layers.erase(ViewLayerType::INFLECTIONAL_GROUP);
+    layers.erase(ViewLayerType::PART_OF_SPEECH);
+    layers.erase(ViewLayerType::META_MORPHEME);
+    layers.erase(ViewLayerType::META_MORPHEME_MOVED);
+}
+
+MetamorphicParse LayerInfo::metaMorphemeRemove(int index) {
+    MetamorphicParse removedParse;
+    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()) {
+        MetaMorphemeLayer *metaMorphemeLayer = (MetaMorphemeLayer *) layers.find(ViewLayerType::META_MORPHEME)->second;
+        if (index >= 0 && index < metaMorphemeLayer->getLayerSize(ViewLayerType::META_MORPHEME)) {
+            removedParse = metaMorphemeLayer->metaMorphemeRemoveFromIndex(index);
+            updateMetaMorphemesMoved();
+        }
+    }
+    return removedParse;
+}
+
+bool LayerInfo::isVerbal() {
+    if (layers.find(ViewLayerType::INFLECTIONAL_GROUP) != layers.end()){
+        return ((MorphologicalAnalysisLayer*) layers.find(ViewLayerType::INFLECTIONAL_GROUP)->second)->isVerbal();
+    } else {
+        return false;
+    }
+}
+
+bool LayerInfo::isNominal() {
+    if (layers.find(ViewLayerType::INFLECTIONAL_GROUP) != layers.end()){
+        return ((MorphologicalAnalysisLayer*) layers.find(ViewLayerType::INFLECTIONAL_GROUP)->second)->isNominal();
+    } else {
+        return false;
+    }
+}
+
+AnnotatedWord *LayerInfo::toAnnotatedWord(int wordIndex) {
+    AnnotatedWord* annotatedWord = new AnnotatedWord(getTurkishWordAt(wordIndex));
+    if (layerExists(ViewLayerType::INFLECTIONAL_GROUP)){
+        annotatedWord->setParse(getMorphologicalParseAt(wordIndex).to_string());
+    }
+    if (layerExists(ViewLayerType::META_MORPHEME)){
+        annotatedWord->setMetamorphicParse(getMetamorphicParseAt(wordIndex).to_string());
+    }
+    if (layerExists(ViewLayerType::SEMANTICS)){
+        annotatedWord->setSemantic(getSemanticAt(wordIndex));
+    }
+    if (layerExists(ViewLayerType::NER)){
+        annotatedWord->setNamedEntityType(getLayerData(ViewLayerType::NER));
+    }
+    if (layerExists(ViewLayerType::PROPBANK)){
+        annotatedWord->setArgument(getArgument().to_string());
+    }
+    if (layerExists(ViewLayerType::SHALLOW_PARSE)){
+        annotatedWord->setShallowParse(getShallowParseAt(wordIndex));
+    }
+    return annotatedWord;
 }
