@@ -424,3 +424,10 @@ AnnotatedWord *LayerInfo::toAnnotatedWord(int wordIndex) {
     }
     return annotatedWord;
 }
+
+LayerInfo::~LayerInfo() {
+    map<ViewLayerType, WordLayer*>::iterator iterator;
+    for (iterator = layers.begin(); iterator != layers.end(); iterator++){
+        delete iterator->second;
+    }
+}

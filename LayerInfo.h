@@ -22,6 +22,7 @@ private:
 public:
     explicit LayerInfo(string info);
     LayerInfo() = default;
+    ~LayerInfo();
     void setLayerData(ViewLayerType viewLayer, string layerValue);
     void setMorphologicalAnalysis(MorphologicalParse parse);
     void setMetaMorphemes(MetamorphicParse parse);
