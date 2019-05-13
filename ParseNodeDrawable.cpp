@@ -3,6 +3,7 @@
 //
 
 #include "ParseNodeDrawable.h"
+#include "ParseNodeSearchable.h"
 
 ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, string line, bool isLeaf, int depth) {
     int parenthesisCount = 0;
@@ -298,4 +299,78 @@ string ParseNodeDrawable::to_string(){
         }
         return st + ") ";
     }
+}
+
+bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node){
+    int i;
+    if (node->isLeaf() && children.size() > 0)
+        return false;
+    for (i = 0; i < node->size(); i++){
+        ViewLayerType viewLayer = node->getViewLayerType(i);
+        string data = node->getValue(i);
+        if (getLayerData(viewLayer).empty() && node->getType(i) != SearchType::EQUALS && node->getType(i) != SearchType::IS_NULL){
+            return false;
+        }
+        switch (node->getType(i)) {
+            case SearchType::CONTAINS:
+                if (getLayerData(viewLayer).find(data) == string::npos) {
+                    return false;
+                }
+                break;
+            case SearchType::EQUALS:
+                if (getLayerData(viewLayer).empty()) {
+                    if (!node->getValue(i).empty()) {
+                        return false;
+                    }
+                } else {
+                    if (getLayerData(viewLayer) != data) {
+                        return false;
+                    }
+                }
+                break;
+            case SearchType::EQUALS_IGNORE_CASE:
+                if (getLayerData(viewLayer) != data) {
+                    return false;
+                }
+                break;
+            case SearchType::STARTS:
+                if (!Word::startsWith(getLayerData(viewLayer), data)) {
+                    return false;
+                }
+                break;
+            case SearchType::ENDS:
+                if (!Word::endsWith(getLayerData(viewLayer), data)) {
+                    return false;
+                }
+                break;
+            case SearchType::IS_NULL:
+                if (!getLayerData(viewLayer).empty()) {
+                    return false;
+                }
+                break;
+            default:
+                return false;
+        }
+    }
+    if (node->numberOfChildren() > children.size()){
+        return false;
+    }
+    for (i = 0; i < children.size(); i++){
+        if (i < node->numberOfChildren() && !((ParseNodeDrawable*)getChild(i))->satisfy((ParseNodeSearchable*)node->getChild(i))){
+            return false;
+        }
+    }
+    return true;
+}
+
+vector<ParseNodeDrawable*> ParseNodeDrawable::satisfy(ParseTreeSearchable tree){
+    vector<ParseNodeDrawable*> result;
+    if (satisfy((ParseNodeSearchable*)(tree.getRoot()))){
+        result.emplace_back(this);
+    }
+    for (ParseNode* child:children){
+        vector<ParseNodeDrawable*> list = ((ParseNodeDrawable*)child)->satisfy(tree);
+        result.insert(result.end(), list.begin(), list.end());
+    }
+    return result;
 }

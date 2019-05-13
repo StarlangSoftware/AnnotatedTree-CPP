@@ -8,6 +8,8 @@
 
 #include <ParseNode.h>
 #include "LayerInfo.h"
+#include "ParseTreeSearchable.h"
+#include "ParseNodeSearchable.h"
 
 class ParseNodeDrawable : public ParseNode{
 protected:
@@ -40,6 +42,8 @@ public:
     string toTurkishSentence();
     void checkGazetteer(Gazetteer gazetteer, string word);
     string to_string();
+    bool satisfy(ParseNodeSearchable* node);
+    vector<ParseNodeDrawable*> satisfy(ParseTreeSearchable tree);
 };
 
 

@@ -18,6 +18,7 @@ protected:
     ParseNode* root = nullptr;
 public:
     ParseTree() = default;
+    ~ParseTree();
     explicit ParseTree(ParseNode* root);
     explicit ParseTree(string line);
     explicit ParseTree(istream& inputFile);
@@ -27,7 +28,7 @@ public:
     int nodeCount();
     int leafCount();
     bool isFullSentence();
-    void save(string fileName);
+    void save(const string& fileName);
     void correctParents();
     void removeXNodes();
     void stripPunctuation();

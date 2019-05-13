@@ -8,6 +8,8 @@
 #include <ViewLayerType.h>
 #include "ParseTree.h"
 #include "FileDescription.h"
+#include "ParseTreeSearchable.h"
+#include "ParseNodeDrawable.h"
 
 class ParseTreeDrawable : public ParseTree{
 private:
@@ -33,6 +35,11 @@ public:
     void saveWithPath(const string& newPath);
     int glossAgreementCount(ParseTree parseTree, ViewLayerType viewLayerType);
     int structureAgreementCount(ParseTree parseTree);
+    int maxDepth();
+    bool layerExists(ViewLayerType viewLayerType);
+    bool layerAll(ViewLayerType viewLayerType);
+    void clearLayer(ViewLayerType layerType);
+    vector<ParseNodeDrawable*> satisfy(ParseTreeSearchable tree);
 };
 
 

@@ -106,3 +106,25 @@ int ParseTreeDrawable::glossAgreementCount(ParseTree parseTree, ViewLayerType vi
 int ParseTreeDrawable::structureAgreementCount(ParseTree parseTree) {
     return ((ParseNodeDrawable*)root)->structureAgreementCount((ParseNodeDrawable*)parseTree.getRoot());
 }
+
+int ParseTreeDrawable::maxDepth() {
+    return ((ParseNodeDrawable*) root)->maxDepth();
+}
+
+bool ParseTreeDrawable::layerExists(ViewLayerType viewLayerType){
+    return ((ParseNodeDrawable*)(root))->layerExists(viewLayerType);
+}
+
+bool ParseTreeDrawable::layerAll(ViewLayerType viewLayerType){
+    return ((ParseNodeDrawable*)(root))->layerAll(viewLayerType);
+}
+
+void ParseTreeDrawable::clearLayer(ViewLayerType layerType) {
+    if (root != nullptr){
+        ((ParseNodeDrawable*)root)->clearLayer(layerType);
+    }
+}
+
+vector<ParseNodeDrawable*> ParseTreeDrawable::satisfy(ParseTreeSearchable tree){
+    return ((ParseNodeDrawable*)root)->satisfy(tree);
+}
