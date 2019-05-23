@@ -6,6 +6,8 @@
 #define ANNOTATEDTREE_TURKISHCCDISAMBIGUATOR_H
 
 
+#include "TurkishPartOfSpeechDisambiguator.h"
+
 class TurkishCCDisambiguator : public TurkishPartOfSpeechDisambiguator{
 
 };

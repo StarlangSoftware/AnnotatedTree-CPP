@@ -110,7 +110,7 @@ FsmParse* TurkishPartOfSpeechDisambiguator::parseShortEnough(vector<FsmParse> fs
             }
         }
     }
-    if (min2Length - minLength > 10 && !Word::endsWith(bestFsmParse->getTransitionList(), "ADV+SINCE") && !bestFsmParse.transitionList().endsWith("NOUN+A3SG+P1SG+DAT") && !bestFsmParse.transitionList().endsWith("NOUN+A3SG+PNON+DAT")){
+    if (min2Length - minLength > 10 && !Word::endsWith(bestFsmParse->getTransitionList(), "ADV+SINCE") && !Word::endsWith(bestFsmParse->getTransitionList(), "NOUN+A3SG+P1SG+DAT") && !Word::endsWith(bestFsmParse->getTransitionList(), "NOUN+A3SG+PNON+DAT")){
         return bestFsmParse;
     }
     return nullptr;
@@ -134,4 +134,54 @@ FsmParse *TurkishPartOfSpeechDisambiguator::caseDisambiguator(vector<FsmParse> f
         }
     }
     return nullptr;
+}
+
+vector<FsmParse> TurkishPartOfSpeechDisambiguator::singleWordInitialPosDisambiguate(FsmParseList *fsmParses, string partOfSpeech) {
+    vector<FsmParse> result;
+    for (int i = 0; i < fsmParses[0].size(); i++){
+        if (!fsmParses[0].getFsmParse(i).getInitialPos().empty() && fsmParses[0].getFsmParse(i).getInitialPos() == partOfSpeech){
+            if (result.empty()){
+                result.emplace_back(fsmParses[0].getFsmParse(i));
+            } else {
+                return result;
+            }
+        }
+    }
+    return result;
+}
+
+vector<FsmParse> TurkishPartOfSpeechDisambiguator::simpleSingleWordDisambiguate(FsmParseList *fsmParses, int size, string partOfSpeech) {
+    if (size > 1){
+        return vector<FsmParse>();
+    }
+    return singleWordInitialPosDisambiguate(fsmParses, move(partOfSpeech));
+}
+
+vector<FsmParse>
+TurkishPartOfSpeechDisambiguator::singleWordWithParseLengthDisambiguate(FsmParseList *fsmParses, string partOfSpeech,
+                                                                        bool initialPos) {
+    vector<FsmParse> result;
+    FsmParse* bestFsmParse;
+    vector<FsmParse> bestList;
+    for (int i = 0; i < fsmParses[0].size(); i++){
+        if (initialPos){
+            if (!fsmParses[0].getFsmParse(i).getInitialPos().empty() && fsmParses[0].getFsmParse(i).getInitialPos() == partOfSpeech){
+                bestList.emplace_back(fsmParses[0].getFsmParse(i));
+            }
+        } else {
+            if (!fsmParses[0].getFsmParse(i).getFinalPos().empty() && fsmParses[0].getFsmParse(i).getFinalPos() == partOfSpeech){
+                bestList.emplace_back(fsmParses[0].getFsmParse(i));
+            }
+        }
+    }
+    bestFsmParse = caseDisambiguator(bestList);
+    if (bestFsmParse != nullptr) {
+        result.emplace_back(*bestFsmParse);
+    } else {
+        bestFsmParse = parseShortEnough(bestList);
+        if (bestFsmParse != nullptr){
+            result.emplace_back(*bestFsmParse);
+        }
+    }
+    return result;
 }
