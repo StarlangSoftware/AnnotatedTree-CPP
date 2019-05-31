@@ -6,6 +6,7 @@
 #define ANNOTATEDTREE_PARSETREEDRAWABLE_H
 
 #include <ViewLayerType.h>
+#include <AnnotatedSentence.h>
 #include "ParseTree.h"
 #include "FileDescription.h"
 #include "ParseTreeSearchable.h"
@@ -40,6 +41,7 @@ public:
     bool layerAll(ViewLayerType viewLayerType);
     void clearLayer(ViewLayerType layerType);
     vector<ParseNodeDrawable*> satisfy(ParseTreeSearchable tree);
+    AnnotatedSentence* generateAnnotatedSentence();
 };
 
 

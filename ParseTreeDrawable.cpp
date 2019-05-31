@@ -6,6 +6,8 @@
 #include <fstream>
 #include "ParseTreeDrawable.h"
 #include "ParseNodeDrawable.h"
+#include "Processor/NodeDrawableCollector.h"
+#include "Processor/Condition/IsTurkishLeafNode.h"
 
 ParseTreeDrawable::ParseTreeDrawable(const string& path, const string& rawFileName) : ParseTreeDrawable(FileDescription(path, rawFileName)){
 }
@@ -127,4 +129,17 @@ void ParseTreeDrawable::clearLayer(ViewLayerType layerType) {
 
 vector<ParseNodeDrawable*> ParseTreeDrawable::satisfy(ParseTreeSearchable tree){
     return ((ParseNodeDrawable*)root)->satisfy(tree);
+}
+
+AnnotatedSentence* ParseTreeDrawable::generateAnnotatedSentence() {
+    auto* sentence = new AnnotatedSentence();
+    NodeDrawableCollector nodeDrawableCollector = NodeDrawableCollector((ParseNodeDrawable*)root, new IsTurkishLeafNode());
+    vector<ParseNodeDrawable*> leafList = nodeDrawableCollector.collect();
+    for (ParseNodeDrawable* parseNode : leafList){
+        LayerInfo* layers = parseNode->getLayerInfo();
+        for (int i = 0; i < layers->getNumberOfWords(); i++){
+            sentence->addWord(layers->toAnnotatedWord(i));
+        }
+    }
+    return sentence;
 }
