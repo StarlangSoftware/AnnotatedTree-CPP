@@ -10,9 +10,6 @@ ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, string line, boo
     string childLine;
     this->depth = depth;
     this->parent = parent;
-    if (parent != nullptr){
-        this->childIndex = parent->children.size();
-    }
     if (isLeaf){
         if (line.find("{") == string::npos){
             data = Symbol(line);
@@ -58,10 +55,8 @@ ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, ParseNodeDrawabl
     this->depth = child->depth;
     child->updateDepths(this->depth + 1);
     this->parent = parent;
-    this->childIndex = child->childIndex;
-    this->parent->setChild(this->childIndex, this);
+    this->parent->setChild(parent->getChildIndex(child), this);
     this->children.emplace_back(child);
-    child->childIndex = 0;
     child->parent = this;
     this->data = Symbol(move(symbol));
 }

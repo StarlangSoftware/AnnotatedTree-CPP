@@ -45,7 +45,6 @@ private:
 protected:
     vector<ParseNode*> children;
     ParseNode* parent = nullptr;
-    int childIndex = -1;
     Symbol data = Symbol("");
 public:
     ParseNode() = default;
@@ -72,6 +71,8 @@ public:
     ParseNode* firstChild();
     ParseNode* lastChild();
     bool isLastChild(ParseNode* child);
+    int getChildIndex(ParseNode* child);
+    bool isDescendant(ParseNode* node);
     ParseNode* previousSibling();
     ParseNode* nextSibling();
     ParseNode* getParent();
