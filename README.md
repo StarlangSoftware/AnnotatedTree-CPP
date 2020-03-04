@@ -39,3 +39,7 @@ The final and probably the most important operation is to branch the morphemes. 
 We treat the suffixes attached to nouns and verbs differently. While all suffixes attached to a noun will be siblings of that noun, each suffix attached to a verb will generate a new parent node and the next suffix will be a sibling of that new node.
 
 In Turkish, suffixes may convert nouns to verbs or vice versa. In such cases, the corresponding node will be treated according to its final form and any additional suffixes will be attached following the above rule. In this stage, we introduced new tags for morphological annotation. Verb and noun roots are tagged as VERB and NOUN respectively. Suffixes attached to verbs determine the new tag that will be created. We simply concatenate their morpholog- ical annotation to VB-.
+
+-----------------------------------
+You can also see either [Java](https://github.com/olcaytaner/AnnotatedTree) 
+or [Python](https://github.com/olcaytaner/AnnotatedTree-Py) repository.
