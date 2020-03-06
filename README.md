@@ -1,29 +1,24 @@
-# AnnotatedTree
+# AnnotatedTree-CPP
+
+A treebank is a corpus where the sentences in each language are syntactically (if necessary morphologically) annotated. In the  treebanks, the syntactic annotation usually follows constituent and/or dependency structure.
+
+Treebanks annotated for the syntactic or semantic structures of the sentences are essential for developing state-of-the-art statistical natural language processing (NLP) systems including part-of-speech-taggers, syntactic parsers, and machine translation systems. There are two main groups of syntactic treebanks, namely treebanks annotated for constituency (phrase structure) and the ones that are annotated for dependency structure.
 
 For Developers
 ============
 You can also see either [Java](https://github.com/olcaytaner/AnnotatedTree) 
 or [Python](https://github.com/olcaytaner/AnnotatedTree-Py) repository.
+
 ## Requirements
 
-* [Java Development Kit 8 or higher](#java), Open JDK or Oracle JDK
-* [Maven](#maven)
+* [C++ Compiler](#cpp)
 * [Git](#git)
 
-### Java 
 
-To check if you have a compatible version of Java installed, use the following command:
-
-    java -version
-    
-If you don't have a compatible version, you can download either [Oracle JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK](https://openjdk.java.net/install/)
-
-### Maven
-To check if you have Maven installed, use the following command:
-
-    mvn --version
-    
-To install Maven, you can follow the instructions [here](https://maven.apache.org/install.html).      
+### CPP
+To check if you have compatible C++ Compiler installed,
+* Open CLion IDE 
+* Preferences >Build,Execution,Deployment > Toolchain  
 
 ### Git
 
@@ -36,37 +31,28 @@ Use Git for cloning the code to your local or below line for Ubuntu:
 
 	git clone <your-fork-git-link>
 
-A directory called DataStructure will be created. Or you can use below link for exploring the code:
+A directory called AnnotatedTree-CPP will be created. Or you can use below link for exploring the code:
 
 	git clone https://github.com/olcaytaner/AnnotatedTree-CPP.git
 
-## Open project with NetBeans IDE
+## Open project with CLion IDE
 
-To import projects from Git with smart import:
+To import projects from Git with version control:
 
-* Click File > Import.
+* Open CLion IDE , select Get From Version Control.
 
-* In the Import window, click Projects from Git (with smart import) and click Next.
+* In the Import window, click URL tab and paste github URL.
 
-* In the Select Repository Source window, click Existing local repository or Clone URI.
+* Click open as Project.
 
-* Step through the wizard and click Finish for the wizard to analyze the content of the project folder to find projects for import and import them in the IDE. 
-
-Result: The imported project is listed in the Project Explorer view.
+Result: The imported project is listed in the Project Explorer view and files are loaded.
 
 
 ## Compile
 
 **From IDE**
 
-After being done with the downloading and Maven indexing, select **Build Project** option from **Build** menu. After compilation process, user can run AnnotatedTree-CPP.
-
-
-
-
-A treebank is a corpus where the sentences in each language are syntactically (if necessary morphologically) annotated. In the  treebanks, the syntactic annotation usually follows constituent and/or dependency structure.
-
-Treebanks annotated for the syntactic or semantic structures of the sentences are essential for developing state-of-the-art statistical natural language processing (NLP) systems including part-of-speech-taggers, syntactic parsers, and machine translation systems. There are two main groups of syntactic treebanks, namely treebanks annotated for constituency (phrase structure) and the ones that are annotated for dependency structure.
+After being done with the downloading and opening project, select **Build Project** option from **Build** menu. After compilation process, user can run TestAnnotatedTree.cpp .
 
 ## Data Format
 
