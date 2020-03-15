@@ -89,3 +89,120 @@ The final and probably the most important operation is to branch the morphemes. 
 We treat the suffixes attached to nouns and verbs differently. While all suffixes attached to a noun will be siblings of that noun, each suffix attached to a verb will generate a new parent node and the next suffix will be a sibling of that new node.
 
 In Turkish, suffixes may convert nouns to verbs or vice versa. In such cases, the corresponding node will be treated according to its final form and any additional suffixes will be attached following the above rule. In this stage, we introduced new tags for morphological annotation. Verb and noun roots are tagged as VERB and NOUN respectively. Suffixes attached to verbs determine the new tag that will be created. We simply concatenate their morpholog- ical annotation to VB-.
+
+Detailed Description
+============
++ [TreeBankDrawable](#treebankdrawable)
++ [ParseTreeDrawable](#parsetreedrawable)
++ [LayerInfo](#layerinfo)
++ [Automatic Annotation](#automatic-annotation)
+
+## TreeBankDrawable
+
+İşaretlenmiş TreeBank'ı yüklemek için
+
+	TreeBankDrawable(File folder, String pattern)
+	a = new TreeBankDrawable(new File("/Turkish-Phrase"), ".train")
+
+	TreeBankDrawable(File folder)
+	a = new TreeBankDrawable(new File("/Turkish-Phrase"))
+
+	TreeBankDrawable(File folder, String pattern, int from, int to)
+	a = new TreeBankDrawable(new File("/Turkish-Phrase"), ".train", 1, 500)
+
+Bir TreeBankDrawable'daki tüm ağaçlara erişmek için
+
+	for (int i = 0; i < a.sentenceCount(); i++){
+		ParseTreeDrawable parseTree = (ParseTreeDrawable) a.get(i);
+		....
+	}
+
+## ParseTreeDrawable
+
+Kaydedilmiş bir ParseTreeDrawable'yi yüklemek için
+
+	ParseTreeDrawable(FileInputStream file)
+	
+kullanılır. Genel olarak tek tek ParseTree yüklemek yerine yukarıda anlatıldığı gibi bir TreeBankDrawable yüklemek daha mantıklıdır.
+
+Bir ParseTreeDrawable'nin düğüm sayısını
+
+	int nodeCount()
+	
+yaprak sayısını 
+
+	int leafCount()
+	
+içinde yer alan kelime sayısını da
+
+	int wordCount(boolean excludeStopWords)
+	
+metodları ile bulabiliriz.
+
+## LayerInfo
+
+İşaretlenmiş bir kelimenin bilgileri LayerInfo sınıfında tutulur. İşaretlenmiş kelimenin morfolojik
+analizi
+
+	MorphologicalParse getMorphologicalParseAt(int index)
+
+İşaretlenmiş kelimenin anlamı
+
+	String getSemanticAt(int index)
+
+İşaretlenmiş kelimenin özne, dolaylı tümleç, vs. shallow parse tagı
+
+	String getShallowParseAt(int index)
+
+İşaretlenmiş kelimenin argüman tagı
+
+	Argument getArgumentAt(int index)
+	
+Bir düğümdeki kelime sayısı
+
+	int getNumberOfWords()
+
+## Automatic Annotation
+
+Bir cümlenin argümanlarını otomatik olarak belirlemek için
+
+	TurkishAutoArgument()
+
+sınıfı kullanılır. 
+
+	void autoArgument(ParseTreeDrawable parseTree, Frameset frameset);
+
+ile ağacın argümanları otomatik olarak işaretlenir.
+
+Bir cümlede otomatik olarak morfolojik belirsizlik gidermek için
+
+	TurkishTreeAutoDisambiguator(RootWordStatistics rootWordStatistics)
+								  
+sınıfı kullanılır. Örneğin,
+
+	a = TurkishTreeAutoDisambiguator(new RootWordStatistics());
+	a.autoDisambiguate(parseTree);
+
+ile ağacın morfolojik belirsizlik gidermesi otomatik olarak yapılır.
+
+Bir cümlede adlandırılmış varlık tanıma yapmak için
+
+	TurkishSentenceAutoNER()
+
+sınıfı kullanılır. Örneğin,
+
+	a = TurkishTreeAutoNER();
+	a.autoNER(parseTree);
+
+ile ağacın varlık tanıma otomatik olarak yapılır.
+
+Bir cümlede anlamsal işaretleme için
+
+	TurkishTreeAutoSemantic()
+
+sınıfı kullanılır. Örneğin,
+
+	a = TurkishTreeAutoSemantic();
+	a.autoSemantic(parseTree);
+
+ile ağacın anlamsal işaretleme otomatik olarak yapılır.
