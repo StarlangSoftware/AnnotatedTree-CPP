@@ -9,11 +9,6 @@ A treebank is a corpus where the sentences in each language are syntactically (i
 
 Treebanks annotated for the syntactic or semantic structures of the sentences are essential for developing state-of-the-art statistical natural language processing (NLP) systems including part-of-speech-taggers, syntactic parsers, and machine translation systems. There are two main groups of syntactic treebanks, namely treebanks annotated for constituency (phrase structure) and the ones that are annotated for dependency structure.
 
-For Developers
-============
-You can also see either [Java](https://github.com/olcaytaner/AnnotatedTree) 
-or [Python](https://github.com/olcaytaner/AnnotatedTree-Py) repository.
-
 ## Requirements
 
 * [C++ Compiler](#cpp)
@@ -38,7 +33,7 @@ Use Git for cloning the code to your local or below line for Ubuntu:
 
 A directory called AnnotatedTree-CPP will be created. Or you can use below link for exploring the code:
 
-	git clone https://github.com/olcaytaner/AnnotatedTree-CPP.git
+	git clone https://github.com/starlangsoftware/AnnotatedTree-CPP.git
 
 ## Open project with CLion IDE
 
