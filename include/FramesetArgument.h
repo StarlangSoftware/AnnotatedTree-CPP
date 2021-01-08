@@ -12,11 +12,14 @@ class FramesetArgument {
 private:
     string argumentType;
     string definition;
+    string function;
 public:
-    FramesetArgument(string argumentType, string definition);
+    FramesetArgument(string argumentType, string definition, string function);
     string getArgumentType();
     string getDefinition();
+    string getFunction();
     void setDefinition(string definition);
+    void setFunction(string function);
     string to_string();
 };
 

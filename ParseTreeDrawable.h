@@ -14,7 +14,7 @@
 
 class ParseTreeDrawable : public ParseTree{
 private:
-    FileDescription fileDescription = FileDescription("", "");
+    FileDescription fileDescription = FileDescription("mypath", "0000.train");
     string name;
     void readFromFile(const string& currentPath);
 public:

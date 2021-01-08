@@ -17,4 +17,11 @@ public:
     virtual void setLayerValue(const string& layerValue) = 0;
 };
 
+template<class T> T MultiWordLayer<T>::getItemAt(int index) {
+    return items.at(index);
+}
+
+template<class T> int MultiWordLayer<T>::size() {
+    return items.size();
+}
 #endif //ANNOTATEDTREE_MULTIWORDLAYER_H

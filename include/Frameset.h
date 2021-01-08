@@ -17,10 +17,10 @@ private:
     string id;
     vector<FramesetArgument> framesetArguments;
 public:
-    Frameset(string id);
-    Frameset(XmlDocument xmlDocument);
+    explicit Frameset(string id);
+    explicit Frameset(XmlDocument xmlDocument);
     bool containsArgument(ArgumentType argumentType);
-    void addArgument(string type, string definition);
+    void addArgument(string type, string definition, string function);
     void deleteArgument(string type, string definition);
     vector<FramesetArgument> getFramesetArguments();
     string getId();

@@ -123,3 +123,5 @@ cmake-build-debug/CMakeFiles/AnnotatedTree.dir/Processor/Condition/IsNoneReplace
 cmake-build-debug/CMakeFiles/AnnotatedTree.dir/Processor/Condition/IsNullElement.cpp.o
 cmake-build-debug/CMakeFiles/AnnotatedTree.dir/Processor/Condition/IsNumber.cpp.o
 cmake-build-debug/CMakeFiles/AnnotatedTree.dir/Processor/Condition/IsPredicateVerbNode.cpp.o
+/cmake-build-debug/CMakeFiles/Test.dir/
+/cmake-build-debug/Test

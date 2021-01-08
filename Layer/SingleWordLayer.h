@@ -13,4 +13,8 @@ public:
     void setLayerValue(const string& layerValue);
 };
 
+template<class T> void SingleWordLayer<T>::setLayerValue(const string& layerValue) {
+    this->layerValue = layerValue;
+}
+
 #endif //ANNOTATEDTREE_SINGLEWORDLAYER_H

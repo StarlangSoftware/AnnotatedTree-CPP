@@ -403,7 +403,7 @@ bool LayerInfo::isNominal() {
 }
 
 AnnotatedWord *LayerInfo::toAnnotatedWord(int wordIndex) {
-    AnnotatedWord* annotatedWord = new AnnotatedWord(getTurkishWordAt(wordIndex));
+    auto* annotatedWord = new AnnotatedWord(getTurkishWordAt(wordIndex));
     if (layerExists(ViewLayerType::INFLECTIONAL_GROUP)){
         annotatedWord->setParse(getMorphologicalParseAt(wordIndex).to_string());
     }

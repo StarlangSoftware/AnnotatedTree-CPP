@@ -8,6 +8,7 @@
 #include <vector>
 #include "Symbol.h"
 #include "SearchDirectionType.h"
+#include "ConstituentSpan.h"
 
 using namespace std;
 
@@ -79,6 +80,7 @@ public:
     Symbol getData();
     void setData(Symbol data);
     int wordCount(bool excludeStopWords);
+    void constituentSpanList(int startIndex, vector<ConstituentSpan>& list);
     bool isLeaf();
     bool isDummyNode();
     string toSentence();

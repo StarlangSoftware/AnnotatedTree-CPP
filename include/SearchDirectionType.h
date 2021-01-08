@@ -5,6 +5,9 @@
 #ifndef PARSETREE_SEARCHDIRECTIONTYPE_H
 #define PARSETREE_SEARCHDIRECTIONTYPE_H
 
+/**
+ * Enumerator class for search direction
+ */
 enum class SearchDirectionType{
     LEFT, RIGHT
 };

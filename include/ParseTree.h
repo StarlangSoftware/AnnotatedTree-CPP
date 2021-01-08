@@ -8,6 +8,7 @@
 #include <vector>
 #include <string>
 #include "ParseNode.h"
+#include "ConstituentSpan.h"
 
 using namespace std;
 
@@ -20,14 +21,15 @@ public:
     ParseTree() = default;
     ~ParseTree();
     explicit ParseTree(ParseNode* root);
-    explicit ParseTree(string line);
     explicit ParseTree(istream& inputFile);
+    explicit ParseTree(string fileName);
     ParseNode* nextLeafNode(ParseNode* parseNode);
     ParseNode* previousLeafNode(ParseNode* parseNode);
     int nodeCountWithMultipleChildren();
     int nodeCount();
     int leafCount();
     bool isFullSentence();
+    vector<ConstituentSpan> constituentSpanList();
     void save(const string& fileName);
     void correctParents();
     void removeXNodes();

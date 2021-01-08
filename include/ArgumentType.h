@@ -8,11 +8,20 @@
 
 using namespace std;
 
+/**
+ * Enumerated class for argument type.
+ */
 enum class ArgumentType {
     NONE, PREDICATE, ARG0, ARG1, ARG2, ARG3, ARG4, ARG5, ARGMNONE, ARGMEXT, ARGMLOC, ARGMDIS, ARGMADV, ARGMCAU, ARGMTMP, ARGMPNC, ARGMMNR, ARGMDIR
 };
 
-static ArgumentType getArguments(const string& argumentsType){
+/**
+ * The getArguments method takes an argumentsType string and returns the {@link ArgumentType} form of it.
+ *
+ * @param argumentsType  Type of the argument in string form
+ * @return Type of the argument in {@link ArgumentType} form
+ */
+static ArgumentType getArguments(const string &argumentsType){
     if (argumentsType.empty()){
         return ArgumentType::NONE;
     } else {
@@ -89,6 +98,12 @@ static ArgumentType getArguments(const string& argumentsType){
     }
 }
 
+/**
+ * The getPropbankType method takes an argumentType in {@link ArgumentType} form and returns the string form of it.
+ *
+ * @param argumentType  Type of the argument in {@link ArgumentType} form
+ * @return Type of the argument in string form
+ */
 static string getPropbankType(ArgumentType argumentType){
     switch (argumentType){
         case ArgumentType::ARG0:

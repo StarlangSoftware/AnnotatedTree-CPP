@@ -8,10 +8,18 @@
 
 using namespace std;
 
+/**
+ * Enumerator class for Named Entity types.
+ */
 enum class NamedEntityType{
     NONE, PERSON, ORGANIZATION, LOCATION, TIME, MONEY
 };
 
+/**
+ * Static function to convert a string entity type to {@link NamedEntityType} type.
+ * @param entityType Entity type in string form
+ * @return Entity type in {@link NamedEntityType} form
+ */
 static NamedEntityType getNamedEntityType(const string entityType){
     if (entityType.empty()){
         return NamedEntityType::NONE;
@@ -40,6 +48,11 @@ static NamedEntityType getNamedEntityType(const string entityType){
     }
 }
 
+/**
+ * Static function to convert a {@link NamedEntityType} to string form.
+ * @param entityType Entity type in {@link NamedEntityType} form
+ * @return Entity type in string form
+ */
 static string getNamedEntityType(NamedEntityType entityType){
     switch (entityType){
         case NamedEntityType::PERSON:

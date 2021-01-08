@@ -11,6 +11,8 @@
 #include <NamedEntityType.h>
 #include <Argument.h>
 #include <FsmParse.h>
+#include <UniversalDependencyRelation.h>
+#include <FrameElement.h>
 #include "ViewLayerType.h"
 #include "Gazetteer.h"
 
@@ -21,7 +23,9 @@ private:
     string semantic;
     NamedEntityType* namedEntityType = nullptr;
     Argument* argument = nullptr;
+    FrameElement* frameElement = nullptr;
     string shallowParse;
+    UniversalDependencyRelation* universalDependency = nullptr;
 public:
     ~AnnotatedWord() override;
     explicit AnnotatedWord(string word);
@@ -40,8 +44,12 @@ public:
     void setNamedEntityType(string namedEntity);
     Argument* getArgument();
     void setArgument(string argument);
+    FrameElement* getFrameElement();
+    void setFrameElement(string frameElement);
     string getShallowParse();
     void setShallowParse(string parse);
+    UniversalDependencyRelation* getUniversalDependency();
+    void setUniversalDependency(int to, string dependencyType);
     void checkGazetteer(Gazetteer gazetteer);
 };
 
