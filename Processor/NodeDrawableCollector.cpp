@@ -10,12 +10,11 @@ NodeDrawableCollector::NodeDrawableCollector(ParseNodeDrawable *rootNode, NodeDr
 }
 
 void NodeDrawableCollector::collectNodes(ParseNodeDrawable *parseNode, vector<ParseNodeDrawable *>& collected) {
-    if (condition->satisfies(parseNode)){
+    if (condition == nullptr || condition->satisfies(parseNode)){
         collected.emplace_back(parseNode);
-    } else {
-        for (int i = 0; i < parseNode->numberOfChildren(); i++){
-            collectNodes((ParseNodeDrawable*)parseNode->getChild(i), collected);
-        }
+    }
+    for (int i = 0; i < parseNode->numberOfChildren(); i++){
+        collectNodes((ParseNodeDrawable*)parseNode->getChild(i), collected);
     }
 }
 
