@@ -4,10 +4,12 @@
 
 #include <istream>
 #include <fstream>
+#include <iostream>
 #include "ParseTreeDrawable.h"
 #include "ParseNodeDrawable.h"
 #include "Processor/NodeDrawableCollector.h"
 #include "Processor/Condition/IsTurkishLeafNode.h"
+#include "Processor/Condition/IsEnglishLeafNode.h"
 
 ParseTreeDrawable::ParseTreeDrawable(const string& path, const string& rawFileName) : ParseTreeDrawable(FileDescription(path, rawFileName)){
 }
@@ -146,11 +148,13 @@ AnnotatedSentence* ParseTreeDrawable::generateAnnotatedSentence() {
 
 AnnotatedSentence *ParseTreeDrawable::generateAnnotatedSentence(string language) {
     auto* sentence = new AnnotatedSentence();
-    NodeDrawableCollector nodeDrawableCollector = NodeDrawableCollector((ParseNodeDrawable*)root, new IsTurkishLeafNode());
+    NodeDrawableCollector nodeDrawableCollector = NodeDrawableCollector((ParseNodeDrawable*)root, new IsEnglishLeafNode());
     vector<ParseNodeDrawable*> leafList = nodeDrawableCollector.collect();
     for (ParseNodeDrawable* parseNode : leafList){
-        auto* newWord = new AnnotatedWord("{" + language + "=" + parseNode->getData().getName() + "}{posTag="
-                                                  + parseNode->getParent()->getData().getName() + "}");
+        string leafWord = parseNode->getData().getName();
+        string parentWord = parseNode->getParent()->getData().getName();
+        string word = "{" + language + "=" + leafWord + "}{posTag=" + parentWord + "}";
+        auto* newWord = new AnnotatedWord(word);
         sentence->addWord(newWord);
     }
     return sentence;

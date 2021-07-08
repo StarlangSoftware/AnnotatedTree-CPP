@@ -20,7 +20,7 @@ ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, string line, boo
         int startPos = line.find(" ");
         data = Symbol(line.substr(1, startPos - 1));
         if (line.find_first_of(")") == line.find_last_of(")")){
-            children.emplace_back(new ParseNodeDrawable(this, line.substr(startPos + 1, line.find(")") - startPos), true, depth + 1));
+            children.emplace_back(new ParseNodeDrawable(this, line.substr(startPos + 1, line.find(")") - startPos - 1), true, depth + 1));
         } else {
             for (int i = startPos + 1; i < line.size(); i++){
                 if (line[i] != ' ' || parenthesisCount > 0){

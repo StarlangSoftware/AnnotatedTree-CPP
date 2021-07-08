@@ -51,3 +51,13 @@ TEST_CASE("ParseTreeDrawableTest-testMaxDepth") {
     REQUIRE(5 == tree8->maxDepth());
     REQUIRE(6 == tree9->maxDepth());
 }
+
+TEST_CASE("ParseTreeDrawableTest-testGenerateAnnotatedSentence2") {
+    ParseTreeDrawable *tree;
+    ifstream inputFile;
+    inputFile.open("trees2/0000.dev", ifstream::in);
+    tree = new ParseTreeDrawable(inputFile);
+    inputFile.close();
+    REQUIRE("{english=The}{posTag=DT} {english=complicated}{posTag=VBN} {english=language}{posTag=NN} {english=in}{posTag=IN} {english=the}{posTag=DT} {english=huge}{posTag=JJ} {english=new}{posTag=JJ} {english=law}{posTag=NN} {english=has}{posTag=VBZ} {english=muddied}{posTag=VBN} {english=the}{posTag=DT} {english=fight}{posTag=NN} {english=.}{posTag=.}" ==
+            tree->generateAnnotatedSentence("english")->to_string());
+}
