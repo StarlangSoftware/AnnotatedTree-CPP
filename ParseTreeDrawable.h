@@ -42,6 +42,7 @@ public:
     void clearLayer(ViewLayerType layerType);
     vector<ParseNodeDrawable*> satisfy(ParseTreeSearchable tree);
     AnnotatedSentence* generateAnnotatedSentence();
+    AnnotatedSentence* generateAnnotatedSentence(string language);
 };
 
 

@@ -143,3 +143,15 @@ AnnotatedSentence* ParseTreeDrawable::generateAnnotatedSentence() {
     }
     return sentence;
 }
+
+AnnotatedSentence *ParseTreeDrawable::generateAnnotatedSentence(string language) {
+    auto* sentence = new AnnotatedSentence();
+    NodeDrawableCollector nodeDrawableCollector = NodeDrawableCollector((ParseNodeDrawable*)root, new IsTurkishLeafNode());
+    vector<ParseNodeDrawable*> leafList = nodeDrawableCollector.collect();
+    for (ParseNodeDrawable* parseNode : leafList){
+        auto* newWord = new AnnotatedWord("{" + language + "=" + parseNode->getData().getName() + "}{posTag="
+                                                  + parseNode->getParent()->getData().getName() + "}");
+        sentence->addWord(newWord);
+    }
+    return sentence;
+}
