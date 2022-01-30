@@ -22,7 +22,7 @@ As is self-explanatory, 'turkish' tag shows the original Turkish word; 'morpholo
 For Developers
 ============
 
-You can also see [Java](https://github.com/starlangsoftware/AnnotatedTree), [Python](https://github.com/starlangsoftware/AnnotatedTree-Py), [Cython](https://github.com/starlangsoftware/AnnotatedTree-Cy), or [C#](https://github.com/starlangsoftware/AnnotatedTree-CS) repository.
+You can also see [Java](https://github.com/starlangsoftware/AnnotatedTree), [Python](https://github.com/starlangsoftware/AnnotatedTree-Py), [Cython](https://github.com/starlangsoftware/AnnotatedTree-Cy), [Js](https://github.com/starlangsoftware/AnnotatedTree-Js), or [C#](https://github.com/starlangsoftware/AnnotatedTree-CS) repository.
 
 ## Requirements
 
