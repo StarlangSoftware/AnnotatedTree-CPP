@@ -41,6 +41,7 @@ public:
     bool layerAll(ViewLayerType viewLayerType);
     string toTurkishSentence();
     void checkGazetteer(Gazetteer gazetteer, string word);
+    void generateParseNode(ParseNode* parseNode, bool surfaceForm);
     string to_string();
     bool satisfy(ParseNodeSearchable* node);
     vector<ParseNodeDrawable*> satisfy(ParseTreeSearchable tree);

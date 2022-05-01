@@ -369,3 +369,20 @@ vector<ParseNodeDrawable*> ParseNodeDrawable::satisfy(ParseTreeSearchable tree){
     }
     return result;
 }
+
+void ParseNodeDrawable::generateParseNode(ParseNode *parseNode, bool surfaceForm) {
+    if (numberOfChildren() == 0){
+        if (surfaceForm){
+            parseNode->setData(Symbol(getLayerData(ViewLayerType::TURKISH_WORD)));
+        } else {
+            parseNode->setData(Symbol(getLayerInfo()->getMorphologicalParseAt(0).getWord()->getName()));
+        }
+    } else {
+        parseNode->setData(data);
+        for (int i = 0; i < numberOfChildren(); i++){
+            auto* newChild = new ParseNode();
+            parseNode->addChild(newChild);
+            ((ParseNodeDrawable*) children[i])->generateParseNode(newChild, surfaceForm);
+        }
+    }
+}

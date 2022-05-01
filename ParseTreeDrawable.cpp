@@ -159,3 +159,9 @@ AnnotatedSentence *ParseTreeDrawable::generateAnnotatedSentence(string language)
     }
     return sentence;
 }
+
+ParseTree *ParseTreeDrawable::generateParseTree(bool surfaceForm) {
+    auto* result = new ParseTree(new ParseNode(root->getData()));
+    ((ParseNodeDrawable*) root)->generateParseNode(result->getRoot(), surfaceForm);
+    return result;
+}

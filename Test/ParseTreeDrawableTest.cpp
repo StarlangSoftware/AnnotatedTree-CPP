@@ -6,6 +6,19 @@
 #include "catch.hpp"
 #include "../ParseTreeDrawable.h"
 
+TEST_CASE("ParseTreeDrawableTest-testGenerateParseTree") {
+    ParseTreeDrawable *tree0;
+    ParseTree* tree;
+    ifstream inputFile;
+    inputFile.open("trees/0000.dev", ifstream::in);
+    tree0 = new ParseTreeDrawable(inputFile);
+    tree = tree0->generateParseTree(true);
+    REQUIRE("(S (NP (NP (ADJP (ADJP yeni) (ADJP Büyük))  (NP yasada))  (NP (ADJP karmaşık) (NP dil)) )  (VP (NP savaşı) (VP bulandırmıştır))  (. .)) " == tree->to_string());
+    tree = tree0->generateParseTree(false);
+    REQUIRE("(S (NP (NP (ADJP (ADJP yeni) (ADJP büyük))  (NP yasa))  (NP (ADJP karmaşık) (NP dil)) )  (VP (NP savaş) (VP bulan))  (. .)) " == tree->to_string());
+    inputFile.close();
+}
+
 TEST_CASE("ParseTreeDrawableTest-testMaxDepth") {
     ParseTreeDrawable *tree0, *tree1, *tree2, *tree3, *tree4;
     ParseTreeDrawable *tree5, *tree6, *tree7, *tree8, *tree9;
