@@ -15,7 +15,6 @@
 class ParseTreeDrawable : public ParseTree{
 private:
     FileDescription fileDescription = FileDescription("mypath", "0000.train");
-    string name;
     void readFromFile(const string& currentPath);
 public:
     ParseTreeDrawable(const string& path, const string& rawFileName);
@@ -28,8 +27,6 @@ public:
     FileDescription getFileDescription();
     void copyInfo(const ParseTreeDrawable& parseTree);
     void reload();
-    void setName(string name);
-    string getName();
     void nextTree(int count);
     void previousTree(int count);
     void save();

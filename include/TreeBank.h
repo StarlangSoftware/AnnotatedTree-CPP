@@ -19,6 +19,7 @@ public:
     int size();
     int wordCount(bool excludeStopWords);
     ParseTree* get(int index);
+    void removeTree(int index);
 };
 
 

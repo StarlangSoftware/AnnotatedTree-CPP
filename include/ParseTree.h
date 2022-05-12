@@ -17,12 +17,15 @@ private:
     static const vector<string> sentenceLabels;
 protected:
     ParseNode* root = nullptr;
+    string name;
 public:
     ParseTree() = default;
     ~ParseTree();
     explicit ParseTree(ParseNode* root);
     explicit ParseTree(istream& inputFile);
     explicit ParseTree(string fileName);
+    void setName(string name);
+    string getName();
     ParseNode* nextLeafNode(ParseNode* parseNode);
     ParseNode* previousLeafNode(ParseNode* parseNode);
     int nodeCountWithMultipleChildren();

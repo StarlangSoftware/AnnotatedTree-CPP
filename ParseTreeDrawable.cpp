@@ -3,8 +3,6 @@
 //
 
 #include <istream>
-#include <fstream>
-#include <iostream>
 #include "ParseTreeDrawable.h"
 #include "ParseNodeDrawable.h"
 #include "Processor/NodeDrawableCollector.h"
@@ -71,14 +69,6 @@ ParseTreeDrawable::ParseTreeDrawable(string line) {
     }
 }
 
-void ParseTreeDrawable::setName(string name) {
-    this->name = move(name);
-}
-
-string ParseTreeDrawable::getName(){
-    return name;
-}
-
 void ParseTreeDrawable::nextTree(int count) {
     fileDescription.addToIndex(count);
     reload();
@@ -91,14 +81,14 @@ void ParseTreeDrawable::previousTree(int count) {
 
 void ParseTreeDrawable::save() {
     ofstream outputFile;
-    outputFile.open(name, ios::out);
+    outputFile.open(fileDescription.getFileName(), ios::out);
     outputFile << "(" + to_string() + ")\n";
     outputFile.close();
 }
 
 void ParseTreeDrawable::saveWithPath(const string& newPath) {
     ofstream outputFile;
-    outputFile.open(newPath, ios::out);
+    outputFile.open(fileDescription.getFileName(newPath), ios::out);
     outputFile << "(" + to_string() + ")\n";
     outputFile.close();
 }
