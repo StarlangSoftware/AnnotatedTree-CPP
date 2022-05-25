@@ -141,7 +141,7 @@ void LayerInfo::setMetaMorphemes(MetamorphicParse parse) {
 }
 
 bool LayerInfo::layerExists(ViewLayerType viewLayerType) {
-    return layers.find(viewLayerType) != layers.end();
+    return layers.contains(viewLayerType);
 }
 
 ViewLayerType LayerInfo::checkLayer(ViewLayerType viewLayer) {
@@ -149,7 +149,7 @@ ViewLayerType LayerInfo::checkLayer(ViewLayerType viewLayer) {
         case ViewLayerType::TURKISH_WORD:
         case ViewLayerType::PERSIAN_WORD:
         case ViewLayerType::ENGLISH_SEMANTICS:
-            if (layers.find(viewLayer) == layers.end()){
+            if (!layers.contains(viewLayer)){
                 return ViewLayerType::ENGLISH_WORD;
             }
         case ViewLayerType::PART_OF_SPEECH:
@@ -160,11 +160,11 @@ ViewLayerType LayerInfo::checkLayer(ViewLayerType viewLayer) {
         case ViewLayerType::PROPBANK:
         case ViewLayerType::SHALLOW_PARSE:
         case ViewLayerType::ENGLISH_PROPBANK:
-            if (layers.find(viewLayer) == layers.end())
+            if (!layers.contains(viewLayer))
                 return checkLayer(ViewLayerType::TURKISH_WORD);
             break;
         case ViewLayerType::META_MORPHEME_MOVED:
-            if (layers.find(viewLayer) == layers.end())
+            if (!layers.contains(viewLayer))
                 return checkLayer(ViewLayerType::META_MORPHEME);
             break;
         default:
@@ -174,10 +174,10 @@ ViewLayerType LayerInfo::checkLayer(ViewLayerType viewLayer) {
 }
 
 int LayerInfo::getNumberOfWords() {
-    if (layers.find(ViewLayerType::TURKISH_WORD) != layers.end()){
+    if (layers.contains(ViewLayerType::TURKISH_WORD)){
         return ((TurkishWordLayer*) (layers.find(ViewLayerType::TURKISH_WORD)->second))->size();
     } else {
-        if (layers.find(ViewLayerType::PERSIAN_WORD) != layers.end()){
+        if (layers.contains(ViewLayerType::PERSIAN_WORD)){
             return ((PersianWordLayer*) (layers.find(ViewLayerType::PERSIAN_WORD)->second))->size();
         }
     }
@@ -185,7 +185,7 @@ int LayerInfo::getNumberOfWords() {
 }
 
 string LayerInfo::getMultiWordAt(ViewLayerType viewLayerType, int index, string layerName) {
-    if (layers.find(viewLayerType) != layers.end()){
+    if (layers.contains(viewLayerType)){
             MultiWordLayer<string>* multiWordLayer = (MultiWordLayer<string>*) (layers.find(viewLayerType)->second);
             if (index < multiWordLayer->size() && index >= 0){
                 return multiWordLayer->getItemAt(index);
@@ -203,7 +203,7 @@ string LayerInfo::getTurkishWordAt(int index) {
 }
 
 int LayerInfo::getNumberOfMeanings() {
-    if (layers.find(ViewLayerType::SEMANTICS) != layers.end()){
+    if (layers.contains(ViewLayerType::SEMANTICS)){
         return ((TurkishSemanticLayer*) (layers.find(ViewLayerType::SEMANTICS)->second))->size();
     } else {
         return 0;
@@ -219,21 +219,21 @@ string LayerInfo::getShallowParseAt(int index) {
 }
 
 Argument LayerInfo::getArgument() {
-    if (layers.find(ViewLayerType::PROPBANK) != layers.end()){
+    if (layers.contains(ViewLayerType::PROPBANK)){
         TurkishPropbankLayer* argumentLayer = (TurkishPropbankLayer*) layers.find(ViewLayerType::PROPBANK)->second;
         return argumentLayer->getArgument();
     }
 }
 
 Argument LayerInfo::getArgumentAt(int index) {
-    if (layers.find(ViewLayerType::ENGLISH_PROPBANK) != layers.end()){
+    if (layers.contains(ViewLayerType::ENGLISH_PROPBANK)){
         SingleWordMultiItemLayer<Argument>* multiArgumentLayer = (SingleWordMultiItemLayer<Argument>*) layers.find(ViewLayerType::ENGLISH_PROPBANK)->second;
         return multiArgumentLayer->getItemAt(index);
     }
 }
 
 MorphologicalParse LayerInfo::getMorphologicalParseAt(int index) {
-    if (layers.find(ViewLayerType::INFLECTIONAL_GROUP) != layers.end()){
+    if (layers.contains(ViewLayerType::INFLECTIONAL_GROUP)){
         MultiWordLayer<MorphologicalParse>* multiWordLayer = (MultiWordLayer<MorphologicalParse>*) layers.find(ViewLayerType::INFLECTIONAL_GROUP)->second;
         if (index < multiWordLayer->size() && index >= 0){
             return multiWordLayer->getItemAt(index);
@@ -242,7 +242,7 @@ MorphologicalParse LayerInfo::getMorphologicalParseAt(int index) {
 }
 
 MetamorphicParse LayerInfo::getMetamorphicParseAt(int index) {
-    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+    if (layers.contains(ViewLayerType::META_MORPHEME)){
         MultiWordLayer<MetamorphicParse>* multiWordLayer = (MultiWordLayer<MetamorphicParse>*) layers.find(ViewLayerType::META_MORPHEME)->second;
         if (index < multiWordLayer->size() && index >= 0){
             return multiWordLayer->getItemAt(index);
@@ -251,7 +251,7 @@ MetamorphicParse LayerInfo::getMetamorphicParseAt(int index) {
 }
 
 string LayerInfo::getMetaMorphemeAtIndex(int index) {
-    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+    if (layers.contains(ViewLayerType::META_MORPHEME)){
         MetaMorphemeLayer* metaMorphemeLayer = (MetaMorphemeLayer*) layers.find(ViewLayerType::META_MORPHEME)->second;
         if (index < metaMorphemeLayer->getLayerSize(ViewLayerType::META_MORPHEME) && index >= 0){
             return metaMorphemeLayer->getLayerInfoAt(ViewLayerType::META_MORPHEME, index);
@@ -261,7 +261,7 @@ string LayerInfo::getMetaMorphemeAtIndex(int index) {
 }
 
 string LayerInfo::getMetaMorphemeFromIndex(int index) {
-    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+    if (layers.contains(ViewLayerType::META_MORPHEME)){
         MetaMorphemeLayer* metaMorphemeLayer = (MetaMorphemeLayer*) layers.find(ViewLayerType::META_MORPHEME)->second;
         if (index < metaMorphemeLayer->getLayerSize(ViewLayerType::META_MORPHEME) && index >= 0){
             return metaMorphemeLayer->getLayerInfoFrom(index);
@@ -313,7 +313,7 @@ string LayerInfo::getLayerDescription() {
 }
 
 string LayerInfo::getLayerData(ViewLayerType viewLayer) {
-    if (layers.find(viewLayer) != layers.end()){
+    if (layers.contains(viewLayer)){
         return layers.find(viewLayer)->second->getLayerValue();
     } else {
         return "";
@@ -326,7 +326,7 @@ string LayerInfo::getRobustLayerData(ViewLayerType viewLayer) {
 }
 
 void LayerInfo::updateMetaMorphemesMoved() {
-    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()){
+    if (layers.contains(ViewLayerType::META_MORPHEME)){
         MetaMorphemeLayer* metaMorphemeLayer = (MetaMorphemeLayer*) layers.find(ViewLayerType::META_MORPHEME)->second;
         if (metaMorphemeLayer->size() > 0){
             string result = metaMorphemeLayer->getItemAt(0).to_string();
@@ -376,7 +376,7 @@ void LayerInfo::morphologicalAnalysisClear() {
 
 MetamorphicParse LayerInfo::metaMorphemeRemove(int index) {
     MetamorphicParse removedParse;
-    if (layers.find(ViewLayerType::META_MORPHEME) != layers.end()) {
+    if (layers.contains(ViewLayerType::META_MORPHEME)) {
         MetaMorphemeLayer *metaMorphemeLayer = (MetaMorphemeLayer *) layers.find(ViewLayerType::META_MORPHEME)->second;
         if (index >= 0 && index < metaMorphemeLayer->getLayerSize(ViewLayerType::META_MORPHEME)) {
             removedParse = metaMorphemeLayer->metaMorphemeRemoveFromIndex(index);
@@ -387,7 +387,7 @@ MetamorphicParse LayerInfo::metaMorphemeRemove(int index) {
 }
 
 bool LayerInfo::isVerbal() {
-    if (layers.find(ViewLayerType::INFLECTIONAL_GROUP) != layers.end()){
+    if (layers.contains(ViewLayerType::INFLECTIONAL_GROUP)){
         return ((MorphologicalAnalysisLayer*) layers.find(ViewLayerType::INFLECTIONAL_GROUP)->second)->isVerbal();
     } else {
         return false;
@@ -395,7 +395,7 @@ bool LayerInfo::isVerbal() {
 }
 
 bool LayerInfo::isNominal() {
-    if (layers.find(ViewLayerType::INFLECTIONAL_GROUP) != layers.end()){
+    if (layers.contains(ViewLayerType::INFLECTIONAL_GROUP)){
         return ((MorphologicalAnalysisLayer*) layers.find(ViewLayerType::INFLECTIONAL_GROUP)->second)->isNominal();
     } else {
         return false;
