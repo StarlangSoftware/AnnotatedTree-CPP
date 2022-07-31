@@ -5,23 +5,27 @@
 #include <fstream>
 #include "TreeBankDrawable.h"
 #include "ParseTreeDrawable.h"
+using std::filesystem::directory_iterator;
 
 TreeBankDrawable::TreeBankDrawable(vector<ParseTree*> parseTrees) {
     this->parseTrees = move(parseTrees);
 }
 
-TreeBankDrawable::TreeBankDrawable(const string& folder, const string& fileList) {
+TreeBankDrawable::TreeBankDrawable(const string& folder) {
     ifstream treeBankFile, parseTreeFile;
     string line;
-    treeBankFile.open(fileList, ifstream::in);
-    while (treeBankFile.good()){
-        treeBankFile >> line;
-        string fileName = folder;
-        fileName += "/" + line;
-        parseTreeFile.open(fileName, ifstream::in);
+    vector<string> files;
+    for (const auto & file : directory_iterator(folder)) {
+        if (!file.is_directory()) {
+            files.emplace_back(file.path());
+        }
+    }
+    sort(files.begin(), files.end());
+    for (const string& file : files) {
+        parseTreeFile.open(file, ifstream::in);
         auto* parseTree = new ParseTreeDrawable(parseTreeFile);
-        parseTree->setName(fileName);
-        parseTree->setFileDescription(FileDescription(folder, line));
+        parseTree->setName(file);
+        parseTree->setFileDescription(FileDescription(folder, file.substr(file.find_last_of('/') + 1)));
         parseTrees.push_back(parseTree);
         parseTreeFile.close();
     }

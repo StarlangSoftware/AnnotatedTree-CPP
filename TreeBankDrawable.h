@@ -11,7 +11,7 @@
 class TreeBankDrawable : public TreeBank{
 public:
     explicit TreeBankDrawable(vector<ParseTree*> parseTrees);
-    TreeBankDrawable(const string& folder, const string& fileList);
+    TreeBankDrawable(const string& folder);
     vector<ParseTree*> getParseTrees();
     ParseTreeDrawable* get(int index);
     ParseTreeDrawable* get(const string& fileName);
