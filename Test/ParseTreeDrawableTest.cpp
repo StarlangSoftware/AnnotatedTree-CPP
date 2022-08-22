@@ -4,8 +4,8 @@
 
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
-#include "../ParseTreeDrawable.h"
-#include "../TreeBankDrawable.h"
+#include "../src/ParseTreeDrawable.h"
+#include "../src/TreeBankDrawable.h"
 
 TEST_CASE("ParseTreeDrawableTest-testGenerateParseTree") {
     ParseTreeDrawable *tree0;
