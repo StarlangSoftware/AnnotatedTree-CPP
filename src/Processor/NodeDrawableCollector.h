@@ -12,10 +12,10 @@ class NodeDrawableCollector {
 private:
     NodeDrawableCondition* condition = nullptr;
     ParseNodeDrawable* rootNode = nullptr;
-    void collectNodes(ParseNodeDrawable* parseNode, vector<ParseNodeDrawable*>& collected);
+    void collectNodes(ParseNodeDrawable* parseNode, vector<ParseNodeDrawable*>& collected) const;
 public:
     NodeDrawableCollector(ParseNodeDrawable* rootNode, NodeDrawableCondition* condition);
-    vector<ParseNodeDrawable*> collect();
+    vector<ParseNodeDrawable*> collect() const;
 };
 
 

@@ -10,7 +10,7 @@
 
 class PersianWordLayer : public TargetLanguageWordLayer{
 public:
-    explicit PersianWordLayer(string layerValue);
+    explicit PersianWordLayer(const string& layerValue);
 };
 
 

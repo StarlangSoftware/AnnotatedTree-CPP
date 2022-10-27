@@ -10,8 +10,8 @@
 
 template <class T> class MultiWordMultiItemLayer : public MultiWordLayer<T> {
 public:
-    virtual int getLayerSize(ViewLayerType viewLayer) = 0;
-    virtual string getLayerInfoAt(ViewLayerType viewLayer, int index) = 0;
+    virtual int getLayerSize(ViewLayerType viewLayer) const = 0;
+    virtual string getLayerInfoAt(ViewLayerType viewLayer, int index) const = 0;
 };
 
 

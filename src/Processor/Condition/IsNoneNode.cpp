@@ -8,7 +8,7 @@ IsNoneNode::IsNoneNode(ViewLayerType secondLanguage) {
     this->secondLanguage = secondLanguage;
 }
 
-bool IsNoneNode::satisfies(ParseNodeDrawable *parseNode) {
+bool IsNoneNode::satisfies(ParseNodeDrawable *parseNode){
     if (IsLeafNode::satisfies(parseNode)){
         string data = parseNode->getLayerData(secondLanguage);
         return !data.empty() && data == "*NONE*";

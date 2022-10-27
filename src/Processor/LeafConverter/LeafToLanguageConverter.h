@@ -12,7 +12,7 @@ class LeafToLanguageConverter : public LeafToStringConverter{
 protected:
     ViewLayerType viewLayerType;
 public:
-    string leafConverter(ParseNodeDrawable* leafNode) override;
+    string leafConverter(ParseNodeDrawable* leafNode) const override;
 };
 
 

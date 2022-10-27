@@ -8,9 +8,9 @@
 
 #include "ShallowParseLayer.h"
 
-ShallowParseLayer::ShallowParseLayer(string layerValue) {
+ShallowParseLayer::ShallowParseLayer(const string& layerValue) {
     this->layerName = "shallowParse";
-    setLayerValue(move(layerValue));
+    setLayerValue(layerValue);
 }
 
 void ShallowParseLayer::setLayerValue(const string& layerValue) {

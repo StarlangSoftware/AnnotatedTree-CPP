@@ -13,9 +13,9 @@ protected:
     string layerValue;
     string layerName;
 public:
-    string getLayerValue();
-    string getLayerName();
-    string getLayerDescription();
+    string getLayerValue() const;
+    string getLayerName() const;
+    string getLayerDescription() const;
 };
 
 

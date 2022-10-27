@@ -6,8 +6,8 @@
 #include "XmlDocument.h"
 #include "ParseNodeDrawable.h"
 
-SearchTree::SearchTree(string fileName) {
-    XmlDocument xmlDocument(move(fileName));
+SearchTree::SearchTree(const string& fileName) {
+    XmlDocument xmlDocument(fileName);
     xmlDocument.parse();
     XmlElement* parseNode = xmlDocument.getFirstChild();
     while (parseNode != nullptr){
@@ -23,9 +23,9 @@ SearchTree::SearchTree(string fileName) {
 
 }
 
-vector<ParseNode *> SearchTree::satisfy(ParseTreeDrawable tree) {
+vector<ParseNode *> SearchTree::satisfy(const ParseTreeDrawable& tree) {
     vector<ParseNodeDrawable*> tmpResult;
-    for (ParseTreeSearchable treeSearchable:searchTrees){
+    for (const ParseTreeSearchable& treeSearchable:searchTrees){
         tmpResult = tree.satisfy(treeSearchable);
         if (!tmpResult.empty()){
             vector<ParseNode*> result;

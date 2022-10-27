@@ -6,9 +6,9 @@
 #include "Dictionary/Word.h"
 #include "TurkishSemanticLayer.h"
 
-TurkishSemanticLayer::TurkishSemanticLayer(string layerValue) {
+TurkishSemanticLayer::TurkishSemanticLayer(const string& layerValue) {
     this->layerName = "semantics";
-    setLayerValue(move(layerValue));
+    setLayerValue(layerValue);
 }
 
 void TurkishSemanticLayer::setLayerValue(const string& layerValue) {

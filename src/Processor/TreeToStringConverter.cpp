@@ -4,7 +4,7 @@
 
 #include "TreeToStringConverter.h"
 
-string TreeToStringConverter::convertToString(ParseNodeDrawable *parseNode) {
+string TreeToStringConverter::convertToString(ParseNodeDrawable *parseNode) const{
     if (parseNode->isLeaf()){
         return converter->leafConverter(parseNode);
     } else {
@@ -16,7 +16,7 @@ string TreeToStringConverter::convertToString(ParseNodeDrawable *parseNode) {
     }
 }
 
-string TreeToStringConverter::convert() {
+string TreeToStringConverter::convert() const{
     return convertToString((ParseNodeDrawable*)parseTree->getRoot());
 }
 

@@ -4,7 +4,7 @@
 
 #include "LeafToLanguageConverter.h"
 
-string LeafToLanguageConverter::leafConverter(ParseNodeDrawable *leafNode) {
+string LeafToLanguageConverter::leafConverter(ParseNodeDrawable *leafNode) const{
     string layerData = leafNode->getLayerData(viewLayerType);
     string parentLayerData = ((ParseNodeDrawable*)leafNode->getParent())->getLayerData(viewLayerType);
     if (!layerData.empty()){

@@ -13,8 +13,8 @@ class SearchTree {
 private:
     vector<ParseTreeSearchable> searchTrees;
 public:
-    SearchTree(string fileName);
-    vector<ParseNode*> satisfy(ParseTreeDrawable tree);
+    SearchTree(const string& fileName);
+    vector<ParseNode*> satisfy(const ParseTreeDrawable& tree);
 };
 
 

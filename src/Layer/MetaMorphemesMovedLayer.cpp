@@ -19,17 +19,17 @@ void MetaMorphemesMovedLayer::setLayerValue(const string &layerValue) {
     }
 }
 
-int MetaMorphemesMovedLayer::getLayerSize(ViewLayerType viewLayer) {
+int MetaMorphemesMovedLayer::getLayerSize(ViewLayerType viewLayer) const{
     int size = 0;
-    for (MetamorphicParse parse: items){
+    for (const MetamorphicParse& parse: items){
         size += parse.size();
     }
     return size;
 }
 
-string MetaMorphemesMovedLayer::getLayerInfoAt(ViewLayerType viewLayer, int index) {
+string MetaMorphemesMovedLayer::getLayerInfoAt(ViewLayerType viewLayer, int index) const{
     int size = 0;
-    for (MetamorphicParse parse: items){
+    for (const MetamorphicParse& parse: items){
         if (index < size + parse.size()){
             return parse.getMetaMorpheme(index - size);
         }

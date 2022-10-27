@@ -14,8 +14,8 @@ class TargetLanguageWordLayer : public MultiWordLayer<string>{
 public:
     explicit TargetLanguageWordLayer(const string& layerValue);
     void setLayerValue(const string& layerValue) override;
-    int getLayerSize(ViewLayerType viewLayer);
-    string getLayerInfoAt(ViewLayerType viewLayer, int index);
+    int getLayerSize(ViewLayerType viewLayer) const;
+    string getLayerInfoAt(ViewLayerType viewLayer, int index) const;
 };
 
 #endif //ANNOTATEDTREE_TARGETLANGUAGEWORDLAYER_H

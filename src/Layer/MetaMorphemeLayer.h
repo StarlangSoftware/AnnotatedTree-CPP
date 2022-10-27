@@ -11,8 +11,8 @@
 class MetaMorphemeLayer : public MetaMorphemesMovedLayer {
 public:
     explicit MetaMorphemeLayer(const string &layerValue);
-    void setLayerValue(MetamorphicParse parse);
-    string getLayerInfoFrom(int index);
+    void setLayerValue(const MetamorphicParse& parse);
+    string getLayerInfoFrom(int index) const;
     MetamorphicParse metaMorphemeRemoveFromIndex(int index);
 };
 

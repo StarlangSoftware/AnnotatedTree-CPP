@@ -4,7 +4,7 @@
 
 #include "IsNoneReplaceable.h"
 
-bool IsNoneReplaceable::satisfies(ParseNodeDrawable *parseNode) {
+bool IsNoneReplaceable::satisfies(ParseNodeDrawable *parseNode){
     if (IsLeafNode::satisfies(parseNode)){
         string data = parseNode->getLayerData(ViewLayerType::ENGLISH_WORD);
         string parentData = parseNode->getParent()->getData().getName();

@@ -98,22 +98,22 @@ ParseNodeSearchable::ParseNodeSearchable(ParseNodeSearchable* parent, XmlElement
     }
 }
 
-SearchType ParseNodeSearchable::getType(int index) {
+SearchType ParseNodeSearchable::getType(int index) const{
     return searchTypes.at(index);
 }
 
-string ParseNodeSearchable::getValue(int index) {
+string ParseNodeSearchable::getValue(int index) const{
     return searchValues.at(index);
 }
 
-ViewLayerType ParseNodeSearchable::getViewLayerType(int index) {
+ViewLayerType ParseNodeSearchable::getViewLayerType(int index) const{
     return viewLayerTypes.at(index);
 }
 
-bool ParseNodeSearchable::isLeaf() {
+bool ParseNodeSearchable::isLeaf() const{
     return isLeafNode;
 }
 
-int ParseNodeSearchable::size() {
+int ParseNodeSearchable::size() const{
     return searchValues.size();
 }

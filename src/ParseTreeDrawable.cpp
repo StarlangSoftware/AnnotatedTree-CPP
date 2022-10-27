@@ -15,11 +15,11 @@ ParseTreeDrawable::ParseTreeDrawable(const string& path, const string& rawFileNa
 ParseTreeDrawable::ParseTreeDrawable(const string &path, const string &extension, int index) : ParseTreeDrawable(FileDescription(path, extension, index)){
 }
 
-ParseTreeDrawable::ParseTreeDrawable(const string& path, FileDescription fileDescription) : ParseTreeDrawable(path, fileDescription.getExtension(), fileDescription.getIndex()) {
+ParseTreeDrawable::ParseTreeDrawable(const string& path, const FileDescription& fileDescription) : ParseTreeDrawable(path, fileDescription.getExtension(), fileDescription.getIndex()) {
 }
 
-ParseTreeDrawable::ParseTreeDrawable(FileDescription fileDescription) {
-    this->fileDescription = move(fileDescription);
+ParseTreeDrawable::ParseTreeDrawable(const FileDescription& fileDescription) {
+    this->fileDescription = fileDescription;
     readFromFile(fileDescription.getPath());
 }
 
@@ -27,7 +27,7 @@ void ParseTreeDrawable::setFileDescription(const FileDescription& fileDescriptio
     this->fileDescription = fileDescription;
 }
 
-FileDescription ParseTreeDrawable::getFileDescription() {
+FileDescription ParseTreeDrawable::getFileDescription() const{
     return fileDescription;
 }
 
@@ -60,12 +60,13 @@ ParseTreeDrawable::ParseTreeDrawable(istream &inputFile) {
     }
 }
 
-ParseTreeDrawable::ParseTreeDrawable(string line) {
-    line = Word::replaceAll(line, "\n", "");
-    line = Word::replaceAll(line, "\t", "");
-    if (line.find('(') != string::npos && line.find(')') != string::npos){
-        line = Word::trim(line.substr(line.find('(') + 1, line.find_last_of(')') - line.find('(')));
-        root = new ParseNodeDrawable(nullptr, line, false, 0);
+ParseTreeDrawable::ParseTreeDrawable(const string& line) {
+    string _line = line;
+    _line = Word::replaceAll(_line, "\n", "");
+    _line = Word::replaceAll(_line, "\t", "");
+    if (_line.find('(') != string::npos && _line.find(')') != string::npos){
+        _line = Word::trim(_line.substr(_line.find('(') + 1, _line.find_last_of(')') - _line.find('(')));
+        root = new ParseNodeDrawable(nullptr, _line, false, 0);
     }
 }
 
@@ -93,23 +94,23 @@ void ParseTreeDrawable::saveWithPath(const string& newPath) {
     outputFile.close();
 }
 
-int ParseTreeDrawable::glossAgreementCount(ParseTree parseTree, ViewLayerType viewLayerType) {
+int ParseTreeDrawable::glossAgreementCount(const ParseTree& parseTree, ViewLayerType viewLayerType) const{
     return ((ParseNodeDrawable*)root)->glossAgreementCount((ParseNodeDrawable*) parseTree.getRoot(), viewLayerType);
 }
 
-int ParseTreeDrawable::structureAgreementCount(ParseTree parseTree) {
+int ParseTreeDrawable::structureAgreementCount(const ParseTree& parseTree) const{
     return ((ParseNodeDrawable*)root)->structureAgreementCount((ParseNodeDrawable*)parseTree.getRoot());
 }
 
-int ParseTreeDrawable::maxDepth() {
+int ParseTreeDrawable::maxDepth() const{
     return ((ParseNodeDrawable*) root)->maxDepth();
 }
 
-bool ParseTreeDrawable::layerExists(ViewLayerType viewLayerType){
+bool ParseTreeDrawable::layerExists(ViewLayerType viewLayerType) const{
     return ((ParseNodeDrawable*)(root))->layerExists(viewLayerType);
 }
 
-bool ParseTreeDrawable::layerAll(ViewLayerType viewLayerType){
+bool ParseTreeDrawable::layerAll(ViewLayerType viewLayerType) const{
     return ((ParseNodeDrawable*)(root))->layerAll(viewLayerType);
 }
 
@@ -119,11 +120,11 @@ void ParseTreeDrawable::clearLayer(ViewLayerType layerType) {
     }
 }
 
-vector<ParseNodeDrawable*> ParseTreeDrawable::satisfy(ParseTreeSearchable tree){
+vector<ParseNodeDrawable*> ParseTreeDrawable::satisfy(const ParseTreeSearchable& tree) const{
     return ((ParseNodeDrawable*)root)->satisfy(tree);
 }
 
-AnnotatedSentence* ParseTreeDrawable::generateAnnotatedSentence() {
+AnnotatedSentence* ParseTreeDrawable::generateAnnotatedSentence() const{
     auto* sentence = new AnnotatedSentence();
     NodeDrawableCollector nodeDrawableCollector = NodeDrawableCollector((ParseNodeDrawable*)root, new IsTurkishLeafNode());
     vector<ParseNodeDrawable*> leafList = nodeDrawableCollector.collect();
@@ -136,7 +137,7 @@ AnnotatedSentence* ParseTreeDrawable::generateAnnotatedSentence() {
     return sentence;
 }
 
-AnnotatedSentence *ParseTreeDrawable::generateAnnotatedSentence(string language) {
+AnnotatedSentence *ParseTreeDrawable::generateAnnotatedSentence(const string& language) const{
     auto* sentence = new AnnotatedSentence();
     NodeDrawableCollector nodeDrawableCollector = NodeDrawableCollector((ParseNodeDrawable*)root, new IsEnglishLeafNode());
     vector<ParseNodeDrawable*> leafList = nodeDrawableCollector.collect();
@@ -150,7 +151,7 @@ AnnotatedSentence *ParseTreeDrawable::generateAnnotatedSentence(string language)
     return sentence;
 }
 
-ParseTree *ParseTreeDrawable::generateParseTree(bool surfaceForm) {
+ParseTree *ParseTreeDrawable::generateParseTree(bool surfaceForm) const{
     auto* result = new ParseTree(new ParseNode(root->getData()));
     ((ParseNodeDrawable*) root)->generateParseNode(result->getRoot(), surfaceForm);
     return result;

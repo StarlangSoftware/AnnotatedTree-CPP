@@ -10,7 +10,7 @@
 
 class TurkishSemanticLayer : public MultiWordLayer<string>{
 public:
-    explicit TurkishSemanticLayer(string layerValue);
+    explicit TurkishSemanticLayer(const string& layerValue);
     void setLayerValue(const string& layerValue);
 };
 

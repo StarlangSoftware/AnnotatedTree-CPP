@@ -4,6 +4,6 @@
 
 #include "TurkishWordLayer.h"
 
-TurkishWordLayer::TurkishWordLayer(string layerValue) : TargetLanguageWordLayer(layerValue) {
+TurkishWordLayer::TurkishWordLayer(const string& layerValue) : TargetLanguageWordLayer(layerValue) {
     layerName = "turkish";
 }

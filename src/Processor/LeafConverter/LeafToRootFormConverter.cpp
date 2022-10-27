@@ -4,7 +4,7 @@
 
 #include "LeafToRootFormConverter.h"
 
-string LeafToRootFormConverter::leafConverter(ParseNodeDrawable *parseNodeDrawable) {
+string LeafToRootFormConverter::leafConverter(ParseNodeDrawable *parseNodeDrawable) const{
     LayerInfo* layerInfo = parseNodeDrawable->getLayerInfo();
     string rootWords = " ";
         for (int i = 0; i < layerInfo->getNumberOfWords(); i++) {

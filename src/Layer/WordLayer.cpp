@@ -4,14 +4,14 @@
 
 #include "WordLayer.h"
 
-string WordLayer::getLayerValue() {
+string WordLayer::getLayerValue() const{
     return layerValue;
 }
 
-string WordLayer::getLayerName() {
+string WordLayer::getLayerName() const{
     return layerName;
 }
 
-string WordLayer::getLayerDescription() {
+string WordLayer::getLayerDescription() const{
     return "{" + layerName + "=" + layerValue + "}";
 }

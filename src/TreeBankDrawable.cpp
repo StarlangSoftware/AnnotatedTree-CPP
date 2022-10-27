@@ -7,8 +7,8 @@
 #include "ParseTreeDrawable.h"
 using std::filesystem::directory_iterator;
 
-TreeBankDrawable::TreeBankDrawable(vector<ParseTree*> parseTrees) {
-    this->parseTrees = move(parseTrees);
+TreeBankDrawable::TreeBankDrawable(const vector<ParseTree*>& parseTrees) {
+    this->parseTrees = parseTrees;
 }
 
 TreeBankDrawable::TreeBankDrawable(const string& folder) {
@@ -32,15 +32,15 @@ TreeBankDrawable::TreeBankDrawable(const string& folder) {
     treeBankFile.close();
 }
 
-vector<ParseTree *> TreeBankDrawable::getParseTrees() {
+vector<ParseTree *> TreeBankDrawable::getParseTrees() const{
     return parseTrees;
 }
 
-ParseTreeDrawable *TreeBankDrawable::get(int index) {
+ParseTreeDrawable *TreeBankDrawable::get(int index) const{
     return (ParseTreeDrawable*) parseTrees.at(index);
 }
 
-ParseTreeDrawable* TreeBankDrawable::get(const string& fileName) {
+ParseTreeDrawable* TreeBankDrawable::get(const string& fileName) const{
     for (ParseTree* tree : parseTrees){
         if (((ParseTreeDrawable*) tree)->getFileDescription().getRawFileName() == fileName){
             return (ParseTreeDrawable*) tree;

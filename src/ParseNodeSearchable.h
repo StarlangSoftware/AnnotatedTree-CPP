@@ -17,11 +17,11 @@ private:
     bool isLeafNode = false;
 public:
     ParseNodeSearchable(ParseNodeSearchable* parent, XmlElement* node);
-    SearchType getType(int index);
-    string getValue(int index);
-    ViewLayerType getViewLayerType(int index);
-    bool isLeaf();
-    int size();
+    SearchType getType(int index) const;
+    string getValue(int index) const;
+    ViewLayerType getViewLayerType(int index) const;
+    bool isLeaf() const;
+    int size() const;
 };
 
 

@@ -13,11 +13,11 @@ class MorphologicalAnalysisLayer : public MultiWordMultiItemLayer<MorphologicalP
 public:
     explicit MorphologicalAnalysisLayer(const string& layerValue);
     void setLayerValue(const string& layerValue) override;
-    void setLayerValue(MorphologicalParse parse);
-    int getLayerSize(ViewLayerType viewLayer) override;
-    string getLayerInfoAt(ViewLayerType viewLayer, int index) override;
-    bool isVerbal();
-    bool isNominal();
+    void setLayerValue(const MorphologicalParse& parse);
+    int getLayerSize(ViewLayerType viewLayer) const override;
+    string getLayerInfoAt(ViewLayerType viewLayer, int index) const override;
+    bool isVerbal() const;
+    bool isNominal() const;
 };
 
 #endif //ANNOTATEDTREE_MORPHOLOGICALANALYSISLAYER_H

@@ -13,8 +13,8 @@ class MetaMorphemesMovedLayer : public MultiWordMultiItemLayer<MetamorphicParse>
 public:
     explicit MetaMorphemesMovedLayer(const string &layerValue);
     void setLayerValue(const string &layerValue) override;
-    int getLayerSize(ViewLayerType viewLayer) override;
-    string getLayerInfoAt(ViewLayerType viewLayer, int index) override;
+    int getLayerSize(ViewLayerType viewLayer) const override;
+    string getLayerInfoAt(ViewLayerType viewLayer, int index) const override;
 };
 
 #endif //ANNOTATEDTREE_METAMORPHEMESMOVEDLAYER_H

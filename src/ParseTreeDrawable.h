@@ -19,28 +19,28 @@ private:
 public:
     ParseTreeDrawable(const string& path, const string& rawFileName);
     ParseTreeDrawable(const string& path, const string& extension, int index);
-    ParseTreeDrawable(const string& path, FileDescription fileDescription);
+    ParseTreeDrawable(const string& path, const FileDescription& fileDescription);
     explicit ParseTreeDrawable(istream& inputFile);
-    explicit ParseTreeDrawable(string line);
-    explicit ParseTreeDrawable(FileDescription fileDescription);
+    explicit ParseTreeDrawable(const string& line);
+    explicit ParseTreeDrawable(const FileDescription& fileDescription);
     void setFileDescription(const FileDescription& fileDescription);
-    FileDescription getFileDescription();
+    FileDescription getFileDescription() const;
     void copyInfo(const ParseTreeDrawable& parseTree);
     void reload();
     void nextTree(int count);
     void previousTree(int count);
     void save();
     void saveWithPath(const string& newPath);
-    int glossAgreementCount(ParseTree parseTree, ViewLayerType viewLayerType);
-    int structureAgreementCount(ParseTree parseTree);
-    int maxDepth();
-    bool layerExists(ViewLayerType viewLayerType);
-    bool layerAll(ViewLayerType viewLayerType);
+    int glossAgreementCount(const ParseTree& parseTree, ViewLayerType viewLayerType) const;
+    int structureAgreementCount(const ParseTree& parseTree) const;
+    int maxDepth() const;
+    bool layerExists(ViewLayerType viewLayerType) const;
+    bool layerAll(ViewLayerType viewLayerType) const;
     void clearLayer(ViewLayerType layerType);
-    vector<ParseNodeDrawable*> satisfy(ParseTreeSearchable tree);
-    AnnotatedSentence* generateAnnotatedSentence();
-    AnnotatedSentence* generateAnnotatedSentence(string language);
-    ParseTree* generateParseTree(bool surfaceForm);
+    vector<ParseNodeDrawable*> satisfy(const ParseTreeSearchable& tree) const;
+    AnnotatedSentence* generateAnnotatedSentence() const;
+    AnnotatedSentence* generateAnnotatedSentence(const string& language) const;
+    ParseTree* generateParseTree(bool surfaceForm) const;
 };
 
 

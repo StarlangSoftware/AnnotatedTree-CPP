@@ -4,7 +4,7 @@
 
 #include "IsTurkishLeafNode.h"
 
-bool IsTurkishLeafNode::satisfies(ParseNodeDrawable *parseNode) {
+bool IsTurkishLeafNode::satisfies(ParseNodeDrawable *parseNode){
     if (IsLeafNode::satisfies(parseNode)){
         string data = parseNode->getLayerInfo()->getLayerData(ViewLayerType::TURKISH_WORD);
         string parentData = parseNode->getParent()->getData().getName();

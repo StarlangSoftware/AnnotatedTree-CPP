@@ -12,8 +12,8 @@ class IsNodeWithSymbol : public NodeDrawableCondition{
 private:
     string symbol;
 public:
-    explicit IsNodeWithSymbol(string symbol);
-    bool satisfies(ParseNodeDrawable* parseNode);
+    explicit IsNodeWithSymbol(const string& symbol);
+    bool satisfies(ParseNodeDrawable* parseNode) const;
 };
 
 

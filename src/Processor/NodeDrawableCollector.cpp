@@ -9,7 +9,7 @@ NodeDrawableCollector::NodeDrawableCollector(ParseNodeDrawable *rootNode, NodeDr
     this->condition = condition;
 }
 
-void NodeDrawableCollector::collectNodes(ParseNodeDrawable *parseNode, vector<ParseNodeDrawable *>& collected) {
+void NodeDrawableCollector::collectNodes(ParseNodeDrawable *parseNode, vector<ParseNodeDrawable *>& collected) const{
     if (condition == nullptr || condition->satisfies(parseNode)){
         collected.emplace_back(parseNode);
     }
@@ -18,7 +18,7 @@ void NodeDrawableCollector::collectNodes(ParseNodeDrawable *parseNode, vector<Pa
     }
 }
 
-vector<ParseNodeDrawable *> NodeDrawableCollector::collect() {
+vector<ParseNodeDrawable *> NodeDrawableCollector::collect() const{
     vector<ParseNodeDrawable*> result;
     collectNodes(rootNode, result);
     return result;

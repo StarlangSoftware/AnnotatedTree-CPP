@@ -10,7 +10,7 @@
 
 class LeafToRootFormConverter : public LeafToStringConverter{
 public:
-    string leafConverter(ParseNodeDrawable* parseNodeDrawable) override;
+    string leafConverter(ParseNodeDrawable* parseNodeDrawable) const override;
 };
 
 

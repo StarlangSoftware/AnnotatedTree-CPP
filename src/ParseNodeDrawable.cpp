@@ -5,21 +5,21 @@
 #include "ParseNodeDrawable.h"
 #include "ParseNodeSearchable.h"
 
-ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, string line, bool isLeaf, int depth) {
+ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, const string& line, bool isLeaf, int depth) {
     int parenthesisCount = 0;
     string childLine;
     this->depth = depth;
     this->parent = parent;
     if (isLeaf){
-        if (line.find("{") == string::npos){
+        if (line.find('{') == string::npos){
             data = Symbol(line);
         } else {
             layers = new LayerInfo(line);
         }
     } else {
-        int startPos = line.find(" ");
+        int startPos = line.find(' ');
         data = Symbol(line.substr(1, startPos - 1));
-        if (line.find_first_of(")") == line.find_last_of(")")){
+        if (line.find_first_of(')') == line.find_last_of(')')){
             children.emplace_back(new ParseNodeDrawable(this, line.substr(startPos + 1, line.find(")") - startPos - 1), true, depth + 1));
         } else {
             for (int i = startPos + 1; i < line.size(); i++){
@@ -42,30 +42,24 @@ ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, string line, boo
     }
 }
 
-ParseNodeDrawable::ParseNodeDrawable(Symbol data) : ParseNode(move(data)) {
+ParseNodeDrawable::ParseNodeDrawable(const Symbol& data) : ParseNode(data) {
 }
 
-ParseNodeDrawable::~ParseNodeDrawable(){
-    if (layers != nullptr){
-        delete layers;
-    }
-}
-
-ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, ParseNodeDrawable *child, string symbol) {
+ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, ParseNodeDrawable *child, const string& symbol) {
     this->depth = child->depth;
     child->updateDepths(this->depth + 1);
     this->parent = parent;
     this->parent->setChild(parent->getChildIndex(child), this);
     this->children.emplace_back(child);
     child->parent = this;
-    this->data = Symbol(move(symbol));
+    this->data = Symbol(symbol);
 }
 
-LayerInfo* ParseNodeDrawable::getLayerInfo() {
+LayerInfo* ParseNodeDrawable::getLayerInfo() const{
     return layers;
 }
 
-Symbol ParseNodeDrawable::getData() {
+Symbol ParseNodeDrawable::getData() const{
     if (layers == nullptr){
         return ParseNode::getData();
     } else {
@@ -90,12 +84,12 @@ void ParseNodeDrawable::clearData() {
     data = Symbol("");
 }
 
-void ParseNodeDrawable::setDataAndClearLayers(Symbol data) {
-    ParseNode::setData(move(data));
+void ParseNodeDrawable::setDataAndClearLayers(const Symbol& data) {
+    ParseNode::setData(data);
     layers = nullptr;
 }
 
-void ParseNodeDrawable::setData(Symbol data) {
+void ParseNodeDrawable::setData(const Symbol& data) {
     if (layers == nullptr){
         ParseNode::setData(data);
     } else {
@@ -103,7 +97,7 @@ void ParseNodeDrawable::setData(Symbol data) {
     }
 }
 
-string ParseNodeDrawable::headWord(ViewLayerType viewLayerType) {
+string ParseNodeDrawable::headWord(ViewLayerType viewLayerType) const{
     if (!children.empty()){
         return ((ParseNodeDrawable*) headChild())->headWord(viewLayerType);
     } else {
@@ -111,23 +105,23 @@ string ParseNodeDrawable::headWord(ViewLayerType viewLayerType) {
     }
 }
 
-string ParseNodeDrawable::getLayerData() {
+string ParseNodeDrawable::getLayerData() const{
     if (!data.getName().empty())
         return data.getName();
     return layers->getLayerDescription();
 }
 
-string ParseNodeDrawable::getLayerData(ViewLayerType viewLayer) {
+string ParseNodeDrawable::getLayerData(ViewLayerType viewLayer) const{
     if (viewLayer == ViewLayerType::WORD || layers == nullptr)
         return data.getName();
     return layers->getLayerData(viewLayer);
 }
 
-int ParseNodeDrawable::getDepth() {
+int ParseNodeDrawable::getDepth() const{
     return depth;
 }
 
-int ParseNodeDrawable::structureAgreementCount(ParseNodeDrawable *parseNode) {
+int ParseNodeDrawable::structureAgreementCount(ParseNodeDrawable *parseNode) const{
     if (children.size() > 1){
         int sum = 1;
         for (int i = 0; i < children.size(); i++){
@@ -159,7 +153,7 @@ int ParseNodeDrawable::structureAgreementCount(ParseNodeDrawable *parseNode) {
     }
 }
 
-int ParseNodeDrawable::glossAgreementCount(ParseNodeDrawable* parseNode, ViewLayerType viewLayerType){
+int ParseNodeDrawable::glossAgreementCount(ParseNodeDrawable* parseNode, ViewLayerType viewLayerType) const{
     if (children.empty()){
         if (parseNode->numberOfChildren() == 0){
             if (getLayerData(viewLayerType) == parseNode->getLayerData(viewLayerType)){
@@ -181,25 +175,25 @@ int ParseNodeDrawable::glossAgreementCount(ParseNodeDrawable* parseNode, ViewLay
     }
 }
 
-void ParseNodeDrawable::updateDepths(int depth){
-    this->depth = depth;
+void ParseNodeDrawable::updateDepths(int _depth){
+    this->depth = _depth;
     for (ParseNode* aChildren:children){
         auto * aChild = (ParseNodeDrawable*) aChildren;
-        aChild->updateDepths(depth + 1);
+        aChild->updateDepths(_depth + 1);
     }
 }
 
-int ParseNodeDrawable::maxDepth() {
-    int depth = this->depth;
+int ParseNodeDrawable::maxDepth() const{
+    int _depth = this->depth;
     for (ParseNode* aChildren : children) {
         auto* aChild = (ParseNodeDrawable*) aChildren;
-        if (aChild->maxDepth() > depth)
-            depth = aChild->maxDepth();
+        if (aChild->maxDepth() > _depth)
+            _depth = aChild->maxDepth();
     }
-    return depth;
+    return _depth;
 }
 
-string ParseNodeDrawable::ancestorString(){
+string ParseNodeDrawable::ancestorString() const{
     if (parent == nullptr){
         return data.getName();
     } else {
@@ -211,7 +205,7 @@ string ParseNodeDrawable::ancestorString(){
     }
 }
 
-bool ParseNodeDrawable::layerExists(ViewLayerType viewLayerType){
+bool ParseNodeDrawable::layerExists(ViewLayerType viewLayerType) const{
     if (children.empty()){
         if (!getLayerData(viewLayerType).empty()){
             return true;
@@ -226,7 +220,7 @@ bool ParseNodeDrawable::layerExists(ViewLayerType viewLayerType){
     return false;
 }
 
-bool ParseNodeDrawable::isDummyNode(){
+bool ParseNodeDrawable::isDummyNode() const{
     string data = getLayerData(ViewLayerType::ENGLISH_WORD);
     string parentData = ((ParseNodeDrawable*) parent)->getLayerData(ViewLayerType::ENGLISH_WORD);
     string targetData = getLayerData(ViewLayerType::TURKISH_WORD);
@@ -240,7 +234,7 @@ bool ParseNodeDrawable::isDummyNode(){
     }
 }
 
-bool ParseNodeDrawable::layerAll(ViewLayerType viewLayerType){
+bool ParseNodeDrawable::layerAll(ViewLayerType viewLayerType) const{
     if (children.empty()){
         if (getLayerData(viewLayerType).empty() && !isDummyNode()){
             return false;
@@ -255,7 +249,7 @@ bool ParseNodeDrawable::layerAll(ViewLayerType viewLayerType){
     return true;
 }
 
-string ParseNodeDrawable::toTurkishSentence() {
+string ParseNodeDrawable::toTurkishSentence() const{
     if (children.empty()){
         if (!getLayerData(ViewLayerType::TURKISH_WORD).empty() && !isDummyNode()){
             return " " + getLayerData(ViewLayerType::TURKISH_WORD);
@@ -271,7 +265,7 @@ string ParseNodeDrawable::toTurkishSentence() {
     }
 }
 
-void ParseNodeDrawable::checkGazetteer(Gazetteer gazetteer, string word){
+void ParseNodeDrawable::checkGazetteer(Gazetteer& gazetteer, const string& word){
     if (gazetteer.contains(word) && getParent()->getData().getName() == "NNP"){
         getLayerInfo()->setLayerData(ViewLayerType::NER, gazetteer.getName());
     }
@@ -280,7 +274,7 @@ void ParseNodeDrawable::checkGazetteer(Gazetteer gazetteer, string word){
     }
 }
 
-string ParseNodeDrawable::to_string(){
+string ParseNodeDrawable::to_string() const{
     if (children.size() < 2){
         if (children.size() < 1){
             return getLayerData();
@@ -290,13 +284,13 @@ string ParseNodeDrawable::to_string(){
     } else {
         string st = "(" + data.getName();
         for (ParseNode* aChild : children) {
-            st = st + " " + aChild->to_string();
+            st += " " + aChild->to_string();
         }
         return st + ") ";
     }
 }
 
-bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node){
+bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node) const{
     int i;
     if (node->isLeaf() && children.size() > 0)
         return false;
@@ -358,7 +352,7 @@ bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node){
     return true;
 }
 
-vector<ParseNodeDrawable*> ParseNodeDrawable::satisfy(ParseTreeSearchable tree){
+vector<ParseNodeDrawable*> ParseNodeDrawable::satisfy(const ParseTreeSearchable& tree){
     vector<ParseNodeDrawable*> result;
     if (satisfy((ParseNodeSearchable*)(tree.getRoot()))){
         result.emplace_back(this);
@@ -370,7 +364,7 @@ vector<ParseNodeDrawable*> ParseNodeDrawable::satisfy(ParseTreeSearchable tree){
     return result;
 }
 
-void ParseNodeDrawable::generateParseNode(ParseNode *parseNode, bool surfaceForm) {
+void ParseNodeDrawable::generateParseNode(ParseNode *parseNode, bool surfaceForm) const{
     if (numberOfChildren() == 0){
         if (surfaceForm){
             parseNode->setData(Symbol(getLayerData(ViewLayerType::TURKISH_WORD)));

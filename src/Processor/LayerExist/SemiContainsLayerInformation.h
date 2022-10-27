@@ -13,7 +13,7 @@ private:
     ViewLayerType viewLayerType;
 public:
     explicit SemiContainsLayerInformation(ViewLayerType viewLayerType);
-    bool satisfies(vector<ParseNodeDrawable*> leafList) override;
+    bool satisfies(const vector<ParseNodeDrawable*>& leafList) const override;
 };
 
 

@@ -9,7 +9,7 @@ NotContainsLayerInformation::NotContainsLayerInformation(ViewLayerType viewLayer
     this->viewLayerType = viewLayerType;
 }
 
-bool NotContainsLayerInformation::satisfies(vector<ParseNodeDrawable *> leafList) {
+bool NotContainsLayerInformation::satisfies(const vector<ParseNodeDrawable *>& leafList) const{
     for (ParseNodeDrawable* parseNode : leafList){
         if (parseNode->getLayerData(ViewLayerType::ENGLISH_WORD).find('*') == string::npos) {
             switch (viewLayerType){

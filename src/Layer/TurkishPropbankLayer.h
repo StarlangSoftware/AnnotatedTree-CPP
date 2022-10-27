@@ -13,10 +13,10 @@ class TurkishPropbankLayer : public SingleWordLayer<Argument>{
 private:
     Argument propbank = Argument("");
 public:
-    explicit TurkishPropbankLayer(string layerValue);
-    void setLayerValue(string layerValue);
-    Argument getArgument();
-    string getLayerValue();
+    explicit TurkishPropbankLayer(const string& layerValue);
+    void setLayerValue(const string& layerValue);
+    Argument getArgument() const;
+    string getLayerValue() const;
 };
 
 

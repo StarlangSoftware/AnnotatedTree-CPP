@@ -4,11 +4,11 @@
 
 #include "IsNodeWithPredicate.h"
 
-IsNodeWithPredicate::IsNodeWithPredicate(string id) : IsNodeWithSynSetId(move(id)) {
+IsNodeWithPredicate::IsNodeWithPredicate(const string& id) : IsNodeWithSynSetId(id) {
 
 }
 
-bool IsNodeWithPredicate::satisfies(ParseNodeDrawable* parseNode) {
+bool IsNodeWithPredicate::satisfies(ParseNodeDrawable* parseNode){
     LayerInfo* layerInfo = parseNode->getLayerInfo();
     return IsNodeWithSynSetId::satisfies(parseNode) && layerInfo != nullptr && !layerInfo->getLayerData(ViewLayerType::PROPBANK).empty() && layerInfo->getLayerData(ViewLayerType::PROPBANK) == "PREDICATE";
 }

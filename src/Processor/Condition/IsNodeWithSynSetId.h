@@ -12,7 +12,7 @@ class IsNodeWithSynSetId : public IsLeafNode{
 private:
     string id;
 public:
-    explicit IsNodeWithSynSetId(string id);
+    explicit IsNodeWithSynSetId(const string& id);
     bool satisfies(ParseNodeDrawable* parseNode);
 };
 

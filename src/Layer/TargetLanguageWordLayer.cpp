@@ -16,11 +16,11 @@ void TargetLanguageWordLayer::setLayerValue(const string& layerValue) {
     }
 }
 
-int TargetLanguageWordLayer::getLayerSize(ViewLayerType viewLayer) {
+int TargetLanguageWordLayer::getLayerSize(ViewLayerType viewLayer) const{
     return 0;
 }
 
-string TargetLanguageWordLayer::getLayerInfoAt(ViewLayerType viewLayer, int index) {
+string TargetLanguageWordLayer::getLayerInfoAt(ViewLayerType viewLayer, int index) const{
     return "";
 }
 

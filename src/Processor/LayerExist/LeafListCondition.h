@@ -9,7 +9,7 @@
 #include "../../ParseNodeDrawable.h"
 
 class LeafListCondition {
-    virtual bool satisfies(vector<ParseNodeDrawable*> leafList) = 0;
+    virtual bool satisfies(const vector<ParseNodeDrawable*>& leafList) const = 0;
 };
 
 

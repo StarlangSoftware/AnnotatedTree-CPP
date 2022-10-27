@@ -8,7 +8,7 @@ MetaMorphemeLayer::MetaMorphemeLayer(const string &layerValue) : MetaMorphemesMo
     layerName = "metaMorphemes";
 }
 
-void MetaMorphemeLayer::setLayerValue(MetamorphicParse parse) {
+void MetaMorphemeLayer::setLayerValue(const MetamorphicParse& parse) {
     layerValue = parse.to_string();
     if (!layerValue.empty()){
         vector<string> splitWords = Word::split(layerValue);
@@ -18,9 +18,9 @@ void MetaMorphemeLayer::setLayerValue(MetamorphicParse parse) {
     }
 }
 
-string MetaMorphemeLayer::getLayerInfoFrom(int index) {
+string MetaMorphemeLayer::getLayerInfoFrom(int index) const{
     int size = 0;
-    for (MetamorphicParse parse: items){
+    for (const MetamorphicParse& parse: items){
         if (index < size + parse.size()){
             string result = parse.getMetaMorpheme(index - size);
             index++;

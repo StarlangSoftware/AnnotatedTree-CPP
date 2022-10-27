@@ -6,20 +6,20 @@
 
 #include "TurkishPropbankLayer.h"
 
-TurkishPropbankLayer::TurkishPropbankLayer(string layerValue) {
+TurkishPropbankLayer::TurkishPropbankLayer(const string& layerValue) {
     layerName = "propbank";
-    setLayerValue(move(layerValue));
+    setLayerValue(layerValue);
 }
 
-void TurkishPropbankLayer::setLayerValue(string layerValue) {
+void TurkishPropbankLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     propbank = Argument(layerValue);
 }
 
-Argument TurkishPropbankLayer::getArgument() {
+Argument TurkishPropbankLayer::getArgument() const{
     return propbank;
 }
 
-string TurkishPropbankLayer::getLayerValue() {
+string TurkishPropbankLayer::getLayerValue() const{
     return propbank.getArgumentType() + "$" + propbank.getId();
 }

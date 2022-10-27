@@ -10,7 +10,7 @@ IsTransferable::IsTransferable(ViewLayerType secondLanguage) {
     this->secondLanguage = secondLanguage;
 }
 
-bool IsTransferable::satisfies(ParseNodeDrawable* parseNode) {
+bool IsTransferable::satisfies(ParseNodeDrawable* parseNode){
     if (IsLeafNode::satisfies(parseNode)) {
         if (IsNoneNode(secondLanguage).satisfies(parseNode)){
             return false;

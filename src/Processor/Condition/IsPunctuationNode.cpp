@@ -4,7 +4,7 @@
 
 #include "IsPunctuationNode.h"
 
-bool IsPunctuationNode::satisfies(ParseNodeDrawable *parseNode) {
+bool IsPunctuationNode::satisfies(ParseNodeDrawable *parseNode){
     if (IsLeafNode::satisfies(parseNode)){
         string data = parseNode->getLayerData(ViewLayerType::ENGLISH_WORD);
         return Word::isPunctuation(data) && data != "$";

@@ -9,7 +9,7 @@ SemiContainsLayerInformation::SemiContainsLayerInformation(ViewLayerType viewLay
     this->viewLayerType = viewLayerType;
 }
 
-bool SemiContainsLayerInformation::satisfies(vector<ParseNodeDrawable *> leafList) {
+bool SemiContainsLayerInformation::satisfies(const vector<ParseNodeDrawable *>& leafList) const{
     int notDone = 0, done = 0;
     for (ParseNodeDrawable* parseNode : leafList){
         if (parseNode->getLayerData(ViewLayerType::ENGLISH_WORD).find('*') == string::npos) {

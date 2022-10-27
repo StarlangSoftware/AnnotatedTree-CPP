@@ -4,6 +4,6 @@
 
 #include "IsLeafNode.h"
 
-bool IsLeafNode::satisfies(ParseNodeDrawable* parseNode) {
+bool IsLeafNode::satisfies(ParseNodeDrawable* parseNode){
     return parseNode->numberOfChildren() == 0;
 }

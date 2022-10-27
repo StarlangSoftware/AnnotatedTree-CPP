@@ -17,33 +17,33 @@ using namespace std;
 class LayerInfo {
 private:
     map<ViewLayerType, WordLayer*> layers;
-    string getMultiWordAt(ViewLayerType viewLayerType, int index, string layerName);
+    string getMultiWordAt(ViewLayerType viewLayerType, int index, const string& layerName) const;
     void updateMetaMorphemesMoved();
 public:
-    explicit LayerInfo(string info);
+    explicit LayerInfo(const string& info);
     LayerInfo() = default;
     ~LayerInfo();
-    void setLayerData(ViewLayerType viewLayer, string layerValue);
-    void setMorphologicalAnalysis(MorphologicalParse parse);
-    void setMetaMorphemes(MetamorphicParse parse);
-    bool layerExists(ViewLayerType viewLayerType);
-    ViewLayerType checkLayer(ViewLayerType viewLayer);
-    int getNumberOfWords();
-    string getTurkishWordAt(int index);
-    int getNumberOfMeanings();
-    string getSemanticAt(int index);
-    string getShallowParseAt(int index);
-    Argument getArgument();
-    Argument getArgumentAt(int index);
-    MorphologicalParse getMorphologicalParseAt(int index);
-    MetamorphicParse getMetamorphicParseAt(int index);
-    string getMetaMorphemeAtIndex(int index);
-    string getMetaMorphemeFromIndex(int index);
-    int getLayerSize(ViewLayerType viewLayer);
-    string getLayerInfoAt(ViewLayerType viewLayer, int index);
+    void setLayerData(ViewLayerType viewLayer, const string& layerValue);
+    void setMorphologicalAnalysis(const MorphologicalParse& parse);
+    void setMetaMorphemes(const MetamorphicParse& parse);
+    bool layerExists(ViewLayerType viewLayerType) const;
+    ViewLayerType checkLayer(ViewLayerType viewLayer) const;
+    int getNumberOfWords() const;
+    string getTurkishWordAt(int index) const;
+    int getNumberOfMeanings() const;
+    string getSemanticAt(int index) const;
+    string getShallowParseAt(int index) const;
+    Argument getArgument() const;
+    Argument getArgumentAt(int index) const;
+    MorphologicalParse getMorphologicalParseAt(int index) const;
+    MetamorphicParse getMetamorphicParseAt(int index) const;
+    string getMetaMorphemeAtIndex(int index) const;
+    string getMetaMorphemeFromIndex(int index) const;
+    int getLayerSize(ViewLayerType viewLayer) const;
+    string getLayerInfoAt(ViewLayerType viewLayer, int index) const;
     string getLayerDescription();
-    string getLayerData(ViewLayerType viewLayer);
-    string getRobustLayerData(ViewLayerType viewLayer);
+    string getLayerData(ViewLayerType viewLayer) const;
+    string getRobustLayerData(ViewLayerType viewLayer) const;
     void removeLayer(ViewLayerType layerType);
     void metaMorphemeClear();
     void englishClear();
@@ -53,9 +53,9 @@ public:
     void englishSemanticClear();
     void morphologicalAnalysisClear();
     MetamorphicParse metaMorphemeRemove(int index);
-    bool isVerbal();
-    bool isNominal();
-    AnnotatedWord* toAnnotatedWord(int wordIndex);
+    bool isVerbal() const;
+    bool isNominal() const;
+    AnnotatedWord* toAnnotatedWord(int wordIndex) const;
 };
 
 

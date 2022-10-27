@@ -6,16 +6,16 @@
 
 #include "NERLayer.h"
 
-NERLayer::NERLayer(string layerValue) {
+NERLayer::NERLayer(const string& layerValue) {
     layerName = "namedEntity";
-    setLayerValue(move(layerValue));
+    setLayerValue(layerValue);
 }
 
-void NERLayer::setLayerValue(string layerValue) {
+void NERLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     namedEntity = getNamedEntityType(layerValue);
 }
 
-string NERLayer::getLayerValue() {
+string NERLayer::getLayerValue() const{
     return getNamedEntityType(namedEntity);
 }

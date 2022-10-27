@@ -13,9 +13,9 @@ class TreeToStringConverter {
 private:
     LeafToStringConverter* converter;
     ParseTreeDrawable* parseTree;
-    string convertToString(ParseNodeDrawable* parseNode);
+    string convertToString(ParseNodeDrawable* parseNode) const;
 public:
-    string convert();
+    string convert() const;
     TreeToStringConverter(ParseTreeDrawable* parseTree, LeafToStringConverter* converter);
 };
 

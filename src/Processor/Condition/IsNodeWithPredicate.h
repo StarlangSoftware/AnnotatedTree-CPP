@@ -10,7 +10,7 @@
 
 class IsNodeWithPredicate : public IsNodeWithSynSetId{
 public:
-    explicit IsNodeWithPredicate(string id);
+    explicit IsNodeWithPredicate(const string& id);
     bool satisfies(ParseNodeDrawable* parseNode);
 };
 

@@ -10,7 +10,7 @@
 
 class ShallowParseLayer : public MultiWordLayer<string> {
 public:
-    explicit ShallowParseLayer(string layerValue);
+    explicit ShallowParseLayer(const string& layerValue);
     void setLayerValue(const string& layerValue);
 };
 

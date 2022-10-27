@@ -5,7 +5,7 @@
 #include "IsEnglishLeafNode.h"
 #include "IsNullElement.h"
 
-bool IsEnglishLeafNode::satisfies(ParseNodeDrawable* parseNode) {
+bool IsEnglishLeafNode::satisfies(ParseNodeDrawable* parseNode){
     if (IsLeafNode::satisfies(parseNode)) {
         IsNullElement isNullElement;
         return !isNullElement.satisfies(parseNode);

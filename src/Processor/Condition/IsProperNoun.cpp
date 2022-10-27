@@ -4,7 +4,7 @@
 
 #include "IsProperNoun.h"
 
-bool IsProperNoun::satisfies(ParseNodeDrawable *parseNode) {
+bool IsProperNoun::satisfies(ParseNodeDrawable *parseNode){
     if (IsLeafNode::satisfies(parseNode)){
         string parentData = parseNode->getParent()->getData().getName();
         return (parentData == "NNP" || parentData == "NNPS");

@@ -8,7 +8,7 @@ IsVerbNode::IsVerbNode(WordNet& wordNet) {
     this->wordNet = wordNet;
 }
 
-bool IsVerbNode::satisfies(ParseNodeDrawable *parseNode) {
+bool IsVerbNode::satisfies(ParseNodeDrawable *parseNode){
     LayerInfo* layerInfo = parseNode->getLayerInfo();
     if (IsLeafNode::satisfies(parseNode) && layerInfo != nullptr && !layerInfo->getLayerData(ViewLayerType::SEMANTICS).empty()){
         for (int i = 0; i < layerInfo->getNumberOfMeanings(); i++){

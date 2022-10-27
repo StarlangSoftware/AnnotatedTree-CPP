@@ -10,7 +10,7 @@
 
 class LeafToStringConverter {
 public:
-    virtual string leafConverter(ParseNodeDrawable* leafNode) = 0;
+    virtual string leafConverter(ParseNodeDrawable* leafNode) const = 0;
 };
 
 

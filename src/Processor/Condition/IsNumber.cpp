@@ -5,7 +5,7 @@
 #include <regex>
 #include "IsNumber.h"
 
-bool IsNumber::satisfies(ParseNodeDrawable *parseNode) {
+bool IsNumber::satisfies(ParseNodeDrawable *parseNode){
     if (IsLeafNode::satisfies(parseNode)){
         string data = parseNode->getLayerData(ViewLayerType::ENGLISH_WORD);
         string parentData = parseNode->getParent()->getData().getName();

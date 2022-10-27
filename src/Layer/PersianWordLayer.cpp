@@ -4,6 +4,6 @@
 
 #include "PersianWordLayer.h"
 
-PersianWordLayer::PersianWordLayer(string layerValue) : TargetLanguageWordLayer(layerValue) {
+PersianWordLayer::PersianWordLayer(const string& layerValue) : TargetLanguageWordLayer(layerValue) {
     layerName = "persian";
 }

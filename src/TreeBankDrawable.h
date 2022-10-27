@@ -10,11 +10,11 @@
 
 class TreeBankDrawable : public TreeBank{
 public:
-    explicit TreeBankDrawable(vector<ParseTree*> parseTrees);
+    explicit TreeBankDrawable(const vector<ParseTree*>& parseTrees);
     TreeBankDrawable(const string& folder);
-    vector<ParseTree*> getParseTrees();
-    ParseTreeDrawable* get(int index);
-    ParseTreeDrawable* get(const string& fileName);
+    vector<ParseTree*> getParseTrees() const;
+    ParseTreeDrawable* get(int index) const;
+    ParseTreeDrawable* get(const string& fileName) const;
     void clearLayer(ViewLayerType layerType);
     void removeTree(int index);
 };

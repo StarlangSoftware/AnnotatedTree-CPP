@@ -19,23 +19,23 @@ void MorphologicalAnalysisLayer::setLayerValue(const string& layerValue) {
     }
 }
 
-void MorphologicalAnalysisLayer::setLayerValue(MorphologicalParse parse) {
+void MorphologicalAnalysisLayer::setLayerValue(const MorphologicalParse& parse) {
     layerValue = parse.getTransitionList();
     items.emplace_back(parse);
 }
 
-int MorphologicalAnalysisLayer::getLayerSize(ViewLayerType viewLayer) {
+int MorphologicalAnalysisLayer::getLayerSize(ViewLayerType viewLayer) const{
     int size;
     switch (viewLayer){
         case ViewLayerType::PART_OF_SPEECH:
             size = 0;
-            for (MorphologicalParse parse:items){
+            for (const MorphologicalParse& parse:items){
                 size += parse.tagSize();
             }
             return size;
         case ViewLayerType::INFLECTIONAL_GROUP:
             size = 0;
-            for (MorphologicalParse parse:items){
+            for (const MorphologicalParse& parse:items){
                 size += parse.size();
             }
             return size;
@@ -44,12 +44,12 @@ int MorphologicalAnalysisLayer::getLayerSize(ViewLayerType viewLayer) {
     }
 }
 
-string MorphologicalAnalysisLayer::getLayerInfoAt(ViewLayerType viewLayer, int index) {
+string MorphologicalAnalysisLayer::getLayerInfoAt(ViewLayerType viewLayer, int index) const{
     int size;
     switch (viewLayer){
         case ViewLayerType::PART_OF_SPEECH:
             size = 0;
-            for (MorphologicalParse parse:items){
+            for (const MorphologicalParse& parse:items){
                 if (index < size + parse.tagSize()){
                     return parse.getTag(index - size);
                 }
@@ -58,7 +58,7 @@ string MorphologicalAnalysisLayer::getLayerInfoAt(ViewLayerType viewLayer, int i
             return "";
         case ViewLayerType::INFLECTIONAL_GROUP:
             size = 0;
-            for (MorphologicalParse parse:items){
+            for (const MorphologicalParse& parse:items){
                 if (index < size + parse.size()){
                     return parse.getInflectionalGroupString(index - size);
                 }
@@ -69,7 +69,7 @@ string MorphologicalAnalysisLayer::getLayerInfoAt(ViewLayerType viewLayer, int i
     return "";
 }
 
-bool MorphologicalAnalysisLayer::isVerbal() {
+bool MorphologicalAnalysisLayer::isVerbal() const{
     string dbLabel = "^DB+";
     string needle = "VERB+";
     string haystack;
@@ -80,7 +80,7 @@ bool MorphologicalAnalysisLayer::isVerbal() {
     return haystack.find(needle) != string::npos;
 }
 
-bool MorphologicalAnalysisLayer::isNominal() {
+bool MorphologicalAnalysisLayer::isNominal() const{
     string dbLabel = "^DB+VERB+";
     string needle = "ZERO+";
     string haystack;

@@ -13,9 +13,9 @@ class NERLayer : public SingleWordLayer<NamedEntityType>{
 private:
     NamedEntityType namedEntity;
 public:
-    explicit NERLayer(string layerValue);
-    void setLayerValue(string layerValue);
-    string getLayerValue();
+    explicit NERLayer(const string& layerValue);
+    void setLayerValue(const string& layerValue);
+    string getLayerValue() const;
 };
 
 
