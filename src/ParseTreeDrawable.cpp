@@ -20,7 +20,7 @@ ParseTreeDrawable::ParseTreeDrawable(const string& path, const FileDescription& 
 
 ParseTreeDrawable::ParseTreeDrawable(const FileDescription& fileDescription) {
     this->fileDescription = fileDescription;
-    readFromFile(fileDescription.getPath());
+    readFromFile(fileDescription.getFileName());
 }
 
 void ParseTreeDrawable::setFileDescription(const FileDescription& fileDescription) {
@@ -36,7 +36,7 @@ void ParseTreeDrawable::copyInfo(const ParseTreeDrawable& parseTree) {
 }
 
 void ParseTreeDrawable::reload() {
-    readFromFile(fileDescription.getPath());
+    readFromFile(fileDescription.getFileName());
 }
 
 void ParseTreeDrawable::readFromFile(const string& currentPath) {
