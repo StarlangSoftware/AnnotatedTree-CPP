@@ -11,7 +11,7 @@ TEST_CASE("ParseTreeDrawableTest-testGenerateParseTree") {
     ParseTreeDrawable *tree0;
     ParseTree* tree;
     ifstream inputFile;
-    inputFile.open("../trees/0000.dev", ifstream::in);
+    inputFile.open("trees/0000.dev", ifstream::in);
     tree0 = new ParseTreeDrawable(inputFile);
     tree = tree0->generateParseTree(true);
     REQUIRE("(S (NP (NP (ADJP (ADJP yeni) (ADJP Büyük))  (NP yasada))  (NP (ADJP karmaşık) (NP dil)) )  (VP (NP savaşı) (VP bulandırmıştır))  (. .)) " == tree->to_string());
@@ -22,7 +22,7 @@ TEST_CASE("ParseTreeDrawableTest-testGenerateParseTree") {
 
 TEST_CASE("ParseTreeDrawableTest-testMaxDepth") {
     TreeBankDrawable* treeBank;
-    treeBank = new TreeBankDrawable("../trees");
+    treeBank = new TreeBankDrawable("trees");
     REQUIRE(5 == treeBank->get(0)->maxDepth());
     REQUIRE(5 == treeBank->get(1)->maxDepth());
     REQUIRE(5 == treeBank->get(2)->maxDepth());
