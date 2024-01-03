@@ -1,6 +1,0 @@
-[requires]
-AnnotatedSentence/1.0.0
-ParseTree/1.0.0
-
-[generators]
-cmake
