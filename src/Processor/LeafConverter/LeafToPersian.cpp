@@ -4,6 +4,9 @@
 
 #include "LeafToPersian.h"
 
+/**
+ * Constructor for LeafToPersian. Sets viewLayerType to PERSIAN.
+ */
 LeafToPersian::LeafToPersian() {
     viewLayerType = ViewLayerType::PERSIAN_WORD;
 }

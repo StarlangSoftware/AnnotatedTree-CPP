@@ -4,6 +4,13 @@
 
 #include "ParseNodeSearchable.h"
 
+/**
+ * Constructs a ParseNodeSearchable from a xml node. If the node is a leaf node, it only sets the search type, layer
+ * name and value. Otherwise, it only sets the parent node. It also calls itself recursively to generate its child
+ * parseNodes.
+ * @param parent The parent node of this node.
+ * @param node Xml node that contains the node information.
+ */
 ParseNodeSearchable::ParseNodeSearchable(ParseNodeSearchable* parent, XmlElement* node) {
     XmlElement* child;
     this->parent = parent;
@@ -98,18 +105,37 @@ ParseNodeSearchable::ParseNodeSearchable(ParseNodeSearchable* parent, XmlElement
     }
 }
 
+/**
+ * Accessor for the search type at the given position
+ * @param index Position of the search type
+ * @return Search type at the given position index.
+ */
 SearchType ParseNodeSearchable::getType(int index) const{
     return searchTypes.at(index);
 }
 
+/**
+ * Accessor for the search value at the given position
+ * @param index Position of the search value
+ * @return Search value at the given position index.
+ */
 string ParseNodeSearchable::getValue(int index) const{
     return searchValues.at(index);
 }
 
+/**
+ * Accessor for the layer name at the given position
+ * @param index Position of the layer name
+ * @return Layer name at the given position index.
+ */
 ViewLayerType ParseNodeSearchable::getViewLayerType(int index) const{
     return viewLayerTypes.at(index);
 }
 
+/**
+ * Accessor for the isLeaf attribute
+ * @return IsLeaf attribute
+ */
 bool ParseNodeSearchable::isLeaf() const{
     return isLeafNode;
 }

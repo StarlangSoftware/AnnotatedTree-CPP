@@ -5,6 +5,14 @@
 #include "ParseNodeDrawable.h"
 #include "ParseNodeSearchable.h"
 
+/**
+ * Constructs a ParseNodeDrawable from a single line. If the node is a leaf node, it only sets the data. Otherwise,
+ * splits the line w.r.t. spaces and parenthesis and calls itself recursively to generate its child parseNodes.
+ * @param parent The parent node of this node.
+ * @param line The input line to create this parseNode.
+ * @param isLeaf True, if this node is a leaf node; false otherwise.
+ * @param depth Depth of the node.
+ */
 ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, const string& line, bool isLeaf, int depth) {
     int parenthesisCount = 0;
     string childLine;
@@ -42,9 +50,20 @@ ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, const string& li
     }
 }
 
+/**
+ * Another simple constructor for ParseNode. It only takes input the data, and sets it.
+ * @param data Data for this node.
+ */
 ParseNodeDrawable::ParseNodeDrawable(const Symbol& data) : ParseNode(data) {
 }
 
+/**
+ * Another constructor for ParseNodeDrawable. Sets the parent to the given parent, and adds given child as a
+ * single child, and sets the given symbol as data.
+ * @param parent Parent of this node.
+ * @param child Single child of this node.
+ * @param symbol Symbol of this node.
+ */
 ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, ParseNodeDrawable *child, const string& symbol) {
     this->depth = child->depth;
     child->updateDepths(this->depth + 1);
@@ -55,10 +74,19 @@ ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, ParseNodeDrawabl
     this->data = Symbol(symbol);
 }
 
+/**
+ * Accessor for layers attribute
+ * @return Layers attribute
+ */
 LayerInfo* ParseNodeDrawable::getLayerInfo() const{
     return layers;
 }
 
+/**
+ * Returns the data. Either the node is a leaf node, in which case English word layer is returned; or the node is
+ * a nonleaf node, in which case the node tag is returned.
+ * @return English word for leaf node, constituency tag for non-leaf node.
+ */
 Symbol ParseNodeDrawable::getData() const{
     if (layers == nullptr){
         return ParseNode::getData();
@@ -67,10 +95,17 @@ Symbol ParseNodeDrawable::getData() const{
     }
 }
 
+/**
+ * Clears the layers hash map.
+ */
 void ParseNodeDrawable::clearLayers() {
     layers = new LayerInfo();
 }
 
+/**
+ * Recursive method to clear a given layer.
+ * @param layerType Name of the layer to be cleared
+ */
 void ParseNodeDrawable::clearLayer(ViewLayerType layerType) {
     if (children.empty() && layerExists(layerType)){
         layers->removeLayer(layerType);
@@ -80,15 +115,27 @@ void ParseNodeDrawable::clearLayer(ViewLayerType layerType) {
     }
 }
 
+/**
+ * Clears the node tag.
+ */
 void ParseNodeDrawable::clearData() {
     data = Symbol("");
 }
 
+/**
+ * Setter for the data attribute and also clears all layers.
+ * @param data New data field.
+ */
 void ParseNodeDrawable::setDataAndClearLayers(const Symbol& data) {
     ParseNode::setData(data);
     layers = nullptr;
 }
 
+/**
+ * Mutator for the data field. If the layers is null, its sets the data field, otherwise it sets the English layer
+ * to the given value.
+ * @param data Data to be set.
+ */
 void ParseNodeDrawable::setData(const Symbol& data) {
     if (layers == nullptr){
         ParseNode::setData(data);
@@ -97,6 +144,11 @@ void ParseNodeDrawable::setData(const Symbol& data) {
     }
 }
 
+/**
+ * Returns the layer value of the head child of this node.
+ * @param viewLayerType Layer name
+ * @return Layer value of the head child of this node.
+ */
 string ParseNodeDrawable::headWord(ViewLayerType viewLayerType) const{
     if (!children.empty()){
         return ((ParseNodeDrawable*) headChild())->headWord(viewLayerType);
@@ -105,22 +157,43 @@ string ParseNodeDrawable::headWord(ViewLayerType viewLayerType) const{
     }
 }
 
+/**
+ * Accessor for the data or layers attribute.
+ * @return If data is not null, this node is a non-leaf node, it returns the data field. Otherwise, this node is a
+ * leaf node, it returns the layer description.
+ */
 string ParseNodeDrawable::getLayerData() const{
     if (!data.getName().empty())
         return data.getName();
     return layers->getLayerDescription();
 }
 
+/**
+ * Returns the layer value of a given layer.
+ * @param viewLayer Layer name
+ * @return Value of the given layer
+ */
 string ParseNodeDrawable::getLayerData(ViewLayerType viewLayer) const{
     if (viewLayer == ViewLayerType::WORD || layers == nullptr)
         return data.getName();
     return layers->getLayerData(viewLayer);
 }
 
+/**
+ * Accessor for the depth attribute
+ * @return Depth attribute
+ */
 int ParseNodeDrawable::getDepth() const{
     return depth;
 }
 
+/**
+ * Returns the number of structural agreement between this node and the given node recursively. Two nodes agree in
+ * structural manner if they have the same number of children and all of their children have the same tags in the
+ * same order.
+ * @param parseNode Parse node to compare in structural manner
+ * @return The number of structural agreement between this node and the given node recursively.
+ */
 int ParseNodeDrawable::structureAgreementCount(ParseNodeDrawable *parseNode) const{
     if (children.size() > 1){
         int sum = 1;
@@ -153,6 +226,13 @@ int ParseNodeDrawable::structureAgreementCount(ParseNodeDrawable *parseNode) con
     }
 }
 
+/**
+ * Returns the number of gloss agreements between this node and the given node recursively. Two nodes agree in
+ * glosses if they are both leaf nodes and their layer info are the same.
+ * @param parseNode Parse node to compare in gloss manner
+ * @param viewLayerType Layer name to compare
+ * @return The number of gloss agreements between this node and the given node recursively.
+ */
 int ParseNodeDrawable::glossAgreementCount(ParseNodeDrawable* parseNode, ViewLayerType viewLayerType) const{
     if (children.empty()){
         if (parseNode->numberOfChildren() == 0){
@@ -175,6 +255,10 @@ int ParseNodeDrawable::glossAgreementCount(ParseNodeDrawable* parseNode, ViewLay
     }
 }
 
+/**
+ * Recursive method which updates the depth attribute
+ * @param depth Current depth to set.
+ */
 void ParseNodeDrawable::updateDepths(int _depth){
     this->depth = _depth;
     for (ParseNode* aChildren:children){
@@ -183,6 +267,10 @@ void ParseNodeDrawable::updateDepths(int _depth){
     }
 }
 
+/**
+ * Calculates the maximum depth of the subtree rooted from this node.
+ * @return The maximum depth of the subtree rooted from this node.
+ */
 int ParseNodeDrawable::maxDepth() const{
     int _depth = this->depth;
     for (ParseNode* aChildren : children) {
@@ -193,6 +281,10 @@ int ParseNodeDrawable::maxDepth() const{
     return _depth;
 }
 
+/**
+ * Recursive method that returns the concatenation of all pos tags of all descendants of this node.
+ * @return The concatenation of all pos tags of all descendants of this node.
+ */
 string ParseNodeDrawable::ancestorString() const{
     if (parent == nullptr){
         return data.getName();
@@ -205,6 +297,13 @@ string ParseNodeDrawable::ancestorString() const{
     }
 }
 
+/**
+ * Recursive method that checks if all nodes in the subtree rooted with this node has the annotation in the given
+ * layer.
+ * @param viewLayerType Layer name
+ * @return True if all nodes in the subtree rooted with this node has the annotation in the given layer, false
+ * otherwise.
+ */
 bool ParseNodeDrawable::layerExists(ViewLayerType viewLayerType) const{
     if (children.empty()){
         if (!getLayerData(viewLayerType).empty()){
@@ -220,6 +319,11 @@ bool ParseNodeDrawable::layerExists(ViewLayerType viewLayerType) const{
     return false;
 }
 
+/**
+ * Checks if the current node is a dummy node or not. A node is a dummy node if its data contains '*', or its
+ * data is '0' and its parent is '-NONE-'.
+ * @return True if the current node is a dummy node, false otherwise.
+ */
 bool ParseNodeDrawable::isDummyNode() const{
     string data = getLayerData(ViewLayerType::ENGLISH_WORD);
     string parentData = ((ParseNodeDrawable*) parent)->getLayerData(ViewLayerType::ENGLISH_WORD);
@@ -234,6 +338,12 @@ bool ParseNodeDrawable::isDummyNode() const{
     }
 }
 
+/**
+ * Checks if all nodes in the subtree rooted with this node has annotation with the given layer.
+ * @param viewLayerType Layer name
+ * @return True if all nodes in the subtree rooted with this node has annotation with the given layer, false
+ * otherwise.
+ */
 bool ParseNodeDrawable::layerAll(ViewLayerType viewLayerType) const{
     if (children.empty()){
         if (getLayerData(viewLayerType).empty() && !isDummyNode()){
@@ -249,6 +359,11 @@ bool ParseNodeDrawable::layerAll(ViewLayerType viewLayerType) const{
     return true;
 }
 
+/**
+ * Recursive method to convert the subtree rooted with this node to a string. All parenthesis types are converted to
+ * their regular forms.
+ * @return String version of the subtree rooted with this node.
+ */
 string ParseNodeDrawable::toTurkishSentence() const{
     if (children.empty()){
         if (!getLayerData(ViewLayerType::TURKISH_WORD).empty() && !isDummyNode()){
@@ -265,6 +380,12 @@ string ParseNodeDrawable::toTurkishSentence() const{
     }
 }
 
+/**
+ * Sets the NER layer according to the tag of the parent node and the word in the node. The word is searched in the
+ * gazetteer, if it exists, the NER info is replaced with the NER tag in the gazetter.
+ * @param gazetteer Gazetter where we search the word
+ * @param word Word to be searched in the gazetter
+ */
 void ParseNodeDrawable::checkGazetteer(Gazetteer& gazetteer, const string& word){
     if (gazetteer.contains(word) && getParent()->getData().getName() == "NNP"){
         getLayerInfo()->setLayerData(ViewLayerType::NER, gazetteer.getName());
@@ -274,6 +395,10 @@ void ParseNodeDrawable::checkGazetteer(Gazetteer& gazetteer, const string& word)
     }
 }
 
+/**
+ * Recursive method to convert the subtree rooted with this node to a string.
+ * @return String version of the subtree rooted with this node.
+ */
 string ParseNodeDrawable::to_string() const{
     if (children.size() < 2){
         if (children.size() < 1){
@@ -290,6 +415,11 @@ string ParseNodeDrawable::to_string() const{
     }
 }
 
+/**
+ * Recursive method that checks if the current node satisfies the conditions in the given search node.
+ * @param node Node containing the search condition
+ * @return True if the node satisfies the condition, false otherwise.
+ */
 bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node) const{
     int i;
     if (node->isLeaf() && children.size() > 0)
@@ -352,6 +482,12 @@ bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node) const{
     return true;
 }
 
+/**
+ * Recursive method that returns all nodes in the subtree rooted with this node those satisfy the conditions in the
+ * given tree.
+ * @param tree Tree containing the search condition
+ * @return All nodes in the subtree rooted with this node those satisfy the conditions in the given tree.
+ */
 vector<ParseNodeDrawable*> ParseNodeDrawable::satisfy(const ParseTreeSearchable& tree){
     vector<ParseNodeDrawable*> result;
     if (satisfy((ParseNodeSearchable*)(tree.getRoot()))){
@@ -364,6 +500,12 @@ vector<ParseNodeDrawable*> ParseNodeDrawable::satisfy(const ParseTreeSearchable&
     return result;
 }
 
+/**
+ * Recursive method that sets the tag information of the given parse node with all descendants with respect to the
+ * morphological annotation of the current node with all descendants.
+ * @param parseNode Parse node whose tag information will be changed.
+ * @param surfaceForm If true, tag will be replaced with the surface form annotation.
+ */
 void ParseNodeDrawable::generateParseNode(ParseNode *parseNode, bool surfaceForm) const{
     if (numberOfChildren() == 0){
         if (surfaceForm){

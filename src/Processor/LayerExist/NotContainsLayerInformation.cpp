@@ -5,10 +5,19 @@
 #include "NotContainsLayerInformation.h"
 #include "../Condition/IsTurkishLeafNode.h"
 
+/**
+ * Constructor for NotContainsLayerInformation class. Sets the viewLayerType attribute.
+ * @param viewLayerType Layer for which check is done.
+ */
 NotContainsLayerInformation::NotContainsLayerInformation(ViewLayerType viewLayerType) {
     this->viewLayerType = viewLayerType;
 }
 
+/**
+ * Checks if none of the leaf nodes in the leafList contains the given layer information.
+ * @param leafList Array list storing the leaf nodes.
+ * @return True if none of the leaf nodes in the leafList contains the given layer information, false otherwise.
+ */
 bool NotContainsLayerInformation::satisfies(const vector<ParseNodeDrawable *>& leafList) const{
     for (ParseNodeDrawable* parseNode : leafList){
         if (parseNode->getLayerData(ViewLayerType::ENGLISH_WORD).find('*') == string::npos) {

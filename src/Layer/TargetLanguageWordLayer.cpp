@@ -4,10 +4,19 @@
 
 #include "TargetLanguageWordLayer.h"
 
+/**
+ * Sets the surface form(s) of the word(s) possibly separated with space.
+ * @param layerValue Surface form(s) of the word(s) possibly separated with space.
+ */
 TargetLanguageWordLayer::TargetLanguageWordLayer(const string& layerValue) {
     setLayerValue(layerValue);
 }
 
+/**
+ * Sets the surface form(s) of the word(s). Value may consist of multiple surface form(s)
+ * separated via space character.
+ * @param layerValue New layer info
+ */
 void TargetLanguageWordLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     if (!layerValue.empty()){

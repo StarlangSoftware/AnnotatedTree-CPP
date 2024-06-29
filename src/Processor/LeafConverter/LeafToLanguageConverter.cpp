@@ -4,6 +4,13 @@
 
 #include "LeafToLanguageConverter.h"
 
+/**
+ * Converts the data in the leaf node to string, except shortcuts to parentheses are converted to its normal forms,
+ * '*', '0', '-NONE-' are converted to empty string.
+ * @param leafNode Node to be converted to string.
+ * @return String form of the data, except shortcuts to parentheses are converted to its normal forms,
+ * '*', '0', '-NONE-' are converted to empty string.
+ */
 string LeafToLanguageConverter::leafConverter(ParseNodeDrawable *leafNode) const{
     string layerData = leafNode->getLayerData(viewLayerType);
     string parentLayerData = ((ParseNodeDrawable*)leafNode->getParent())->getLayerData(viewLayerType);

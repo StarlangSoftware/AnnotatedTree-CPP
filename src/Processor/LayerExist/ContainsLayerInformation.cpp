@@ -5,10 +5,19 @@
 #include "ContainsLayerInformation.h"
 #include "../Condition/IsTurkishLeafNode.h"
 
+/**
+ * Constructor for ContainsLayerInformation class. Sets the viewLayerType attribute.
+ * @param viewLayerType Layer for which check is done.
+ */
 ContainsLayerInformation::ContainsLayerInformation(ViewLayerType viewLayerType) {
     this->viewLayerType = viewLayerType;
 }
 
+/**
+ * Checks if all leaf nodes in the leafList contains the given layer information.
+ * @param leafList Array list storing the leaf nodes.
+ * @return True if all leaf nodes in the leafList contains the given layer information, false otherwise.
+ */
 bool ContainsLayerInformation::satisfies(const vector<ParseNodeDrawable *>& leafList) const{
     for (ParseNodeDrawable* parseNode : leafList){
         if (parseNode->getLayerData(ViewLayerType::ENGLISH_WORD).find('*') == string::npos){

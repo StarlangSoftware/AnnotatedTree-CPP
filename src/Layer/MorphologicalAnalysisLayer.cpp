@@ -4,11 +4,21 @@
 
 #include "MorphologicalAnalysisLayer.h"
 
+/**
+ * Constructor for the morphological analysis layer. Sets the morphological parse information for multiple words in
+ * the node.
+ * @param layerValue Layer value for the morphological parse information. Consists of morphological parse information
+ *                   of multiple words separated via space character.
+ */
 MorphologicalAnalysisLayer::MorphologicalAnalysisLayer(const string& layerValue) {
     layerName = "morphologicalAnalysis";
     setLayerValue(layerValue);
 }
 
+/**
+ * Sets the layer value to the string form of the given morphological parse.
+ * @param layerValue New morphological parse.
+ */
 void MorphologicalAnalysisLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     if (!layerValue.empty()){
@@ -19,11 +29,22 @@ void MorphologicalAnalysisLayer::setLayerValue(const string& layerValue) {
     }
 }
 
+/**
+ * Sets the layer value to the string form of the given morphological parse.
+ * @param parse New morphological parse.
+ */
 void MorphologicalAnalysisLayer::setLayerValue(const MorphologicalParse& parse) {
     layerValue = parse.getTransitionList();
     items.emplace_back(parse);
 }
 
+/**
+ * Returns the total number of morphological tags (for PART_OF_SPEECH) or inflectional groups
+ * (for INFLECTIONAL_GROUP) in the words in the node.
+ * @param viewLayer Layer type.
+ * @return Total number of morphological tags (for PART_OF_SPEECH) or inflectional groups (for INFLECTIONAL_GROUP)
+ * in the words in the node.
+ */
 int MorphologicalAnalysisLayer::getLayerSize(ViewLayerType viewLayer) const{
     int size;
     switch (viewLayer){
@@ -44,6 +65,13 @@ int MorphologicalAnalysisLayer::getLayerSize(ViewLayerType viewLayer) const{
     }
 }
 
+/**
+ * Returns the morphological tag (for PART_OF_SPEECH) or inflectional group (for INFLECTIONAL_GROUP) at position
+ * index.
+ * @param viewLayer Layer type.
+ * @param index Position of the morphological tag (for PART_OF_SPEECH) or inflectional group (for INFLECTIONAL_GROUP)
+ * @return The morphological tag (for PART_OF_SPEECH) or inflectional group (for INFLECTIONAL_GROUP)
+ */
 string MorphologicalAnalysisLayer::getLayerInfoAt(ViewLayerType viewLayer, int index) const{
     int size;
     switch (viewLayer){
@@ -69,6 +97,10 @@ string MorphologicalAnalysisLayer::getLayerInfoAt(ViewLayerType viewLayer, int i
     return "";
 }
 
+/**
+ * Checks if the last inflectional group contains VERB tag.
+ * @return True if the last inflectional group contains VERB tag, false otherwise.
+ */
 bool MorphologicalAnalysisLayer::isVerbal() const{
     string dbLabel = "^DB+";
     string needle = "VERB+";
@@ -80,6 +112,10 @@ bool MorphologicalAnalysisLayer::isVerbal() const{
     return haystack.find(needle) != string::npos;
 }
 
+/**
+ * Checks if the last verbal inflectional group contains ZERO tag.
+ * @return True if the last verbal inflectional group contains ZERO tag, false otherwise.
+ */
 bool MorphologicalAnalysisLayer::isNominal() const{
     string dbLabel = "^DB+VERB+";
     string needle = "ZERO+";

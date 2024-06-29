@@ -23,7 +23,7 @@ public:
     explicit ParseTreeDrawable(istream& inputFile);
     explicit ParseTreeDrawable(const string& line);
     explicit ParseTreeDrawable(const FileDescription& fileDescription);
-    void setFileDescription(const FileDescription& fileDescription);
+    void setFileDescription(const FileDescription& _fileDescription);
     FileDescription getFileDescription() const;
     void copyInfo(const ParseTreeDrawable& parseTree);
     void reload();

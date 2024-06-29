@@ -4,6 +4,10 @@
 
 #include "EnglishWordLayer.h"
 
+/**
+ * Constructor for the word layer for English language. Sets the surface form.
+ * @param layerValue Value for the word layer.
+ */
 EnglishWordLayer::EnglishWordLayer(const string& layerValue) : SourceLanguageWordLayer(layerValue) {
     layerName = "english";
 }

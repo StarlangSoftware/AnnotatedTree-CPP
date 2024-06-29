@@ -5,10 +5,20 @@
 #include "SemiContainsLayerInformation.h"
 #include "../Condition/IsTurkishLeafNode.h"
 
+/**
+ * Constructor for SemiContainsLayerInformation class. Sets the viewLayerType attribute.
+ * @param viewLayerType Layer for which check is done.
+ */
 SemiContainsLayerInformation::SemiContainsLayerInformation(ViewLayerType viewLayerType) {
     this->viewLayerType = viewLayerType;
 }
 
+/**
+ * Checks if some (but not all) of the leaf nodes in the leafList contains the given layer information.
+ * @param leafList Array list storing the leaf nodes.
+ * @return True if some (but not all) of the leaf nodes in the leafList contains the given layer information, false
+ * otherwise.
+ */
 bool SemiContainsLayerInformation::satisfies(const vector<ParseNodeDrawable *>& leafList) const{
     int notDone = 0, done = 0;
     for (ParseNodeDrawable* parseNode : leafList){

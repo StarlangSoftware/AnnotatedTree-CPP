@@ -4,6 +4,11 @@
 
 #include "IsTurkishLeafNode.h"
 
+/**
+ * Checks if the parse node is a leaf node and contains a valid Turkish word in its data.
+ * @param parseNode Parse node to check.
+ * @return True if the parse node is a leaf node and contains a valid Turkish word in its data; false otherwise.
+ */
 bool IsTurkishLeafNode::satisfies(ParseNodeDrawable *parseNode){
     if (IsLeafNode::satisfies(parseNode)){
         string data = parseNode->getLayerInfo()->getLayerData(ViewLayerType::TURKISH_WORD);
