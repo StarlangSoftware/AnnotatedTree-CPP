@@ -232,9 +232,6 @@ int LayerInfo::getNumberOfWords() const{
  * @param viewLayerType Layer for which the value at the given word index will be returned.
  * @param index Word Position of the layer value.
  * @param layerName Name of the layer.
- * @throws LayerNotExistsException If the layer does not exist, it throws LayerNotExistsException. If the layer is
- * not a MultiWordLayer, it throws LayerNotExistsException exception.
- * @throws WordNotExistsException If the index is out of bounds, it throws WordNotExistsException.
  * @return Layer info at word position index for a multiword layer.
  */
 string LayerInfo::getMultiWordAt(ViewLayerType viewLayerType, int index, const string& layerName) const{
@@ -254,8 +251,6 @@ string LayerInfo::getMultiWordAt(ViewLayerType viewLayerType, int index, const s
 /**
  * Layers may contain multiple Turkish words. This method returns the Turkish word at position index.
  * @param index Position of the Turkish word.
- * @throws LayerNotExistsException If the layer does not exist, it throws LayerNotExistsException.
- * @throws WordNotExistsException If the index is out of bounds, it throws WordNotExistsException.
  * @return The Turkish word at position index.
  */
 string LayerInfo::getTurkishWordAt(int index) const{
@@ -278,8 +273,6 @@ int LayerInfo::getNumberOfMeanings() const{
  * Layers may contain multiple semantic information corresponding to multiple Turkish words. This method returns
  * the sense id at position index.
  * @param index Position of the Turkish word.
- * @throws LayerNotExistsException If the layer does not exist, it throws LayerNotExistsException.
- * @throws WordNotExistsException If the index is out of bounds, it throws WordNotExistsException.
  * @return The Turkish sense id at position index.
  */
 string LayerInfo::getSemanticAt(int index) const{
@@ -290,8 +283,6 @@ string LayerInfo::getSemanticAt(int index) const{
  * Layers may contain multiple shallow parse information corresponding to multiple Turkish words. This method
  * returns the shallow parse tag at position index.
  * @param index Position of the Turkish word.
- * @throws LayerNotExistsException If the layer does not exist, it throws LayerNotExistsException.
- * @throws WordNotExistsException If the index is out of bounds, it throws WordNotExistsException.
  * @return The shallow parse tag at position index.
  */
 string LayerInfo::getShallowParseAt(int index) const{
