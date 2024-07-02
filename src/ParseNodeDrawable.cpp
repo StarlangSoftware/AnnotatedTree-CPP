@@ -383,7 +383,7 @@ string ParseNodeDrawable::toTurkishSentence() const{
 /**
  * Sets the NER layer according to the tag of the parent node and the word in the node. The word is searched in the
  * gazetteer, if it exists, the NER info is replaced with the NER tag in the gazetter.
- * @param gazetteer Gazetter where we search the word
+ * @param gazetteer Gazetteer where we search the word
  * @param word Word to be searched in the gazetter
  */
 void ParseNodeDrawable::checkGazetteer(Gazetteer& gazetteer, const string& word){

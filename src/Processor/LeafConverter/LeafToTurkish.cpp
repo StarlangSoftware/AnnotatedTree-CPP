@@ -5,7 +5,7 @@
 #include "LeafToTurkish.h"
 
 /**
- * Constructor for LeafToPersian. Sets viewLayerType to TURKISH.
+ * Constructor for LeafToTurkish. Sets viewLayerType to TURKISH.
  */
 LeafToTurkish::LeafToTurkish() {
     viewLayerType = ViewLayerType::TURKISH_WORD;

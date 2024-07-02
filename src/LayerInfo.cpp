@@ -157,7 +157,7 @@ void LayerInfo::setMorphologicalAnalysis(const MorphologicalParse& parse) {
 
 /**
  * Updates the metamorpheme layer according to the given parse.
- * @param parse NEw parse to update layer.
+ * @param parse New parse to update layer.
  */
 void LayerInfo::setMetaMorphemes(const MetamorphicParse& parse) {
     layers.emplace(ViewLayerType::META_MORPHEME, new MetaMorphemeLayer(parse.to_string()));
@@ -303,6 +303,7 @@ Argument LayerInfo::getArgument() const{
 /**
  * A word may have multiple English propbank info. This method returns the English PropBank argument info at
  * position index.
+ * @param index Position of the argument
  * @return English PropBank argument info at position index.
  */
 Argument LayerInfo::getArgumentAt(int index) const{
@@ -458,8 +459,6 @@ string LayerInfo::getRobustLayerData(ViewLayerType viewLayer) const{
 
 /**
  * Initializes the metamorphemesmoved layer with metamorpheme layer except the root word.
- * @throws LayerNotExistsException If the layer does not exist, it throws LayerNotExistsException.
- * @throws WordNotExistsException If the root word does not exist, it throws WordNotExistsException.
  */
 void LayerInfo::updateMetaMorphemesMoved() {
     if (layers.contains(ViewLayerType::META_MORPHEME)){
