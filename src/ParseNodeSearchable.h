@@ -16,7 +16,7 @@ private:
     vector<string> searchValues;
     bool isLeafNode = false;
 public:
-    ParseNodeSearchable(ParseNodeSearchable* parent, XmlElement* node);
+    ParseNodeSearchable(ParseNodeSearchable* parent, const XmlElement* node);
     SearchType getType(int index) const;
     string getValue(int index) const;
     ViewLayerType getViewLayerType(int index) const;

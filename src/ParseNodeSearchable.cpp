@@ -11,7 +11,7 @@
  * @param parent The parent node of this node.
  * @param node Xml node that contains the node information.
  */
-ParseNodeSearchable::ParseNodeSearchable(ParseNodeSearchable* parent, XmlElement* node) {
+ParseNodeSearchable::ParseNodeSearchable(ParseNodeSearchable* parent, const XmlElement* node) {
     XmlElement* child;
     this->parent = parent;
     isLeafNode = node->getName() == "leaf";

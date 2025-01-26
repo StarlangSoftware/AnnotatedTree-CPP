@@ -29,14 +29,14 @@ public:
     void reload();
     void nextTree(int count);
     void previousTree(int count);
-    void save();
-    void saveWithPath(const string& newPath);
+    void save() const;
+    void saveWithPath(const string& newPath) const;
     int glossAgreementCount(const ParseTree& parseTree, ViewLayerType viewLayerType) const;
     int structureAgreementCount(const ParseTree& parseTree) const;
     int maxDepth() const;
     bool layerExists(ViewLayerType viewLayerType) const;
     bool layerAll(ViewLayerType viewLayerType) const;
-    void clearLayer(ViewLayerType layerType);
+    void clearLayer(ViewLayerType layerType) const;
     vector<ParseNodeDrawable*> satisfy(const ParseTreeSearchable& tree) const;
     AnnotatedSentence* generateAnnotatedSentence() const;
     AnnotatedSentence* generateAnnotatedSentence(const string& language) const;

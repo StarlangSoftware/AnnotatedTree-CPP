@@ -15,7 +15,7 @@ public:
     vector<ParseTree*> getParseTrees() const;
     ParseTreeDrawable* get(int index) const;
     ParseTreeDrawable* get(const string& fileName) const;
-    void clearLayer(ViewLayerType layerType);
+    void clearLayer(ViewLayerType layerType) const;
     void removeTree(int index);
 };
 

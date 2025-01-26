@@ -3,6 +3,7 @@
 //
 
 #include "EnglishPropbankLayer.h"
+#include <StringUtils.h>
 
 /**
  * Constructor for the propbank layer for English language.
@@ -21,9 +22,9 @@ EnglishPropbankLayer::EnglishPropbankLayer(const string &layerValue) {
 void EnglishPropbankLayer::setLayerValue(const string &layerValue) {
     this->layerValue = layerValue;
     if (!layerValue.empty()){
-        vector<string> splitWords = Word::split(layerValue, "#");
+        vector<string> splitWords = StringUtils::split(layerValue, "#");
         for (const string &word : splitWords){
-            items.emplace_back(Argument(word));
+            items.emplace_back(word);
         }
     }
 }

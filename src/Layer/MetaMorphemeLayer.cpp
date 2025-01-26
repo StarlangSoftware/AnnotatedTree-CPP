@@ -3,6 +3,7 @@
 //
 
 #include "MetaMorphemeLayer.h"
+#include <StringUtils.h>
 
 /**
  * Constructor for the metamorpheme layer. Sets the metamorpheme information for multiple words in the node.
@@ -20,9 +21,9 @@ MetaMorphemeLayer::MetaMorphemeLayer(const string &layerValue) : MetaMorphemesMo
 void MetaMorphemeLayer::setLayerValue(const MetamorphicParse& parse) {
     layerValue = parse.to_string();
     if (!layerValue.empty()){
-        vector<string> splitWords = Word::split(layerValue);
+        vector<string> splitWords = StringUtils::split(layerValue);
         for (const string &word:splitWords){
-            items.emplace_back(MetamorphicParse(word));
+            items.emplace_back(word);
         }
     }
 }

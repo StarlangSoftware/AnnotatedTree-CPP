@@ -22,7 +22,7 @@ public:
     LayerInfo* getLayerInfo() const;
     Symbol getData() const;
     void clearLayers();
-    void clearLayer(ViewLayerType layerType);
+    void clearLayer(ViewLayerType layerType) const;
     void clearData();
     void setDataAndClearLayers(const Symbol& data);
     void setData(const Symbol& data);
@@ -30,8 +30,8 @@ public:
     string getLayerData() const;
     string getLayerData(ViewLayerType viewLayer) const;
     int getDepth() const;
-    int structureAgreementCount(ParseNodeDrawable* parseNode) const;
-    int glossAgreementCount(ParseNodeDrawable* parseNode, ViewLayerType viewLayerType) const;
+    int structureAgreementCount(const ParseNodeDrawable* parseNode) const;
+    int glossAgreementCount(const ParseNodeDrawable* parseNode, ViewLayerType viewLayerType) const;
     void updateDepths(int _depth);
     int maxDepth() const;
     string ancestorString() const;
@@ -39,10 +39,10 @@ public:
     bool isDummyNode() const;
     bool layerAll(ViewLayerType viewLayerType) const;
     string toTurkishSentence() const;
-    void checkGazetteer(Gazetteer& gazetteer, const string& word);
+    void checkGazetteer(const Gazetteer& gazetteer, const string& word) const;
     void generateParseNode(ParseNode* parseNode, bool surfaceForm) const;
     string to_string() const;
-    bool satisfy(ParseNodeSearchable* node) const;
+    bool satisfy(const ParseNodeSearchable* node) const;
     vector<ParseNodeDrawable*> satisfy(const ParseTreeSearchable& tree);
 };
 

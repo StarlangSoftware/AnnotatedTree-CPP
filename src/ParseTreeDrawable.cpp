@@ -4,6 +4,7 @@
 
 #include <istream>
 #include "ParseTreeDrawable.h"
+#include <StringUtils.h>
 #include "ParseNodeDrawable.h"
 #include "Processor/NodeDrawableCollector.h"
 #include "Processor/Condition/IsTurkishLeafNode.h"
@@ -48,7 +49,7 @@ ParseTreeDrawable::ParseTreeDrawable(const FileDescription& fileDescription) {
 
 /**
  * Mutator method for the fileDescription attribute.
- * @param fileDescription New fileDescription value.
+ * @param _fileDescription New fileDescription value.
  */
 void ParseTreeDrawable::setFileDescription(const FileDescription& _fileDescription) {
     this->fileDescription = _fileDescription;
@@ -88,7 +89,7 @@ void ParseTreeDrawable::readFromFile(const string& currentPath) {
     string line;
     getline(inputFile, line);
     if (line.find('(') != string::npos && line.find(')') != string::npos){
-        line = Word::trim(line.substr(line.find('(') + 1, line.find_last_of(')') - line.find('(')));
+        line = StringUtils::trim(line.substr(line.find('(') + 1, line.find_last_of(')') - line.find('(')));
         root = new ParseNodeDrawable(nullptr, line, false, 0);
     }
     inputFile.close();
@@ -103,7 +104,7 @@ ParseTreeDrawable::ParseTreeDrawable(istream &inputFile) {
     string line;
     getline(inputFile, line);
     if (line.find('(') != string::npos && line.find(')') != string::npos){
-        line = Word::trim(line.substr(line.find('(') + 1, line.find_last_of(')') - line.find('(')));
+        line = StringUtils::trim(line.substr(line.find('(') + 1, line.find_last_of(')') - line.find('(')));
         root = new ParseNodeDrawable(nullptr, line, false, 0);
     }
 }
@@ -115,10 +116,10 @@ ParseTreeDrawable::ParseTreeDrawable(istream &inputFile) {
  */
 ParseTreeDrawable::ParseTreeDrawable(const string& line) {
     string _line = line;
-    _line = Word::replaceAll(_line, "\n", "");
-    _line = Word::replaceAll(_line, "\t", "");
+    _line = StringUtils::replaceAll(_line, "\n", "");
+    _line = StringUtils::replaceAll(_line, "\t", "");
     if (_line.find('(') != string::npos && _line.find(')') != string::npos){
-        _line = Word::trim(_line.substr(_line.find('(') + 1, _line.find_last_of(')') - _line.find('(')));
+        _line = StringUtils::trim(_line.substr(_line.find('(') + 1, _line.find_last_of(')') - _line.find('(')));
         root = new ParseNodeDrawable(nullptr, _line, false, 0);
     }
 }
@@ -148,7 +149,7 @@ void ParseTreeDrawable::previousTree(int count) {
 /**
  * Saves current tree.
  */
-void ParseTreeDrawable::save() {
+void ParseTreeDrawable::save() const {
     ofstream outputFile;
     outputFile.open(fileDescription.getFileName(), ios::out);
     outputFile << "(" + to_string() + ")\n";
@@ -159,7 +160,7 @@ void ParseTreeDrawable::save() {
  * Saves current tree to the newPath with other file properties staying the same.
  * @param newPath Path to which tree will be saved
  */
-void ParseTreeDrawable::saveWithPath(const string& newPath) {
+void ParseTreeDrawable::saveWithPath(const string& newPath) const {
     ofstream outputFile;
     outputFile.open(fileDescription.getFileName(newPath), ios::out);
     outputFile << "(" + to_string() + ")\n";
@@ -218,7 +219,7 @@ bool ParseTreeDrawable::layerAll(ViewLayerType viewLayerType) const{
  * Clears the given layer for all nodes in the tree
  * @param layerType Layer name
  */
-void ParseTreeDrawable::clearLayer(ViewLayerType layerType) {
+void ParseTreeDrawable::clearLayer(ViewLayerType layerType) const {
     if (root != nullptr){
         ((ParseNodeDrawable*)root)->clearLayer(layerType);
     }

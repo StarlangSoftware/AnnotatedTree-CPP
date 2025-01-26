@@ -3,6 +3,7 @@
 //
 
 #include "ParseNodeDrawable.h"
+#include <StringUtils.h>
 #include "ParseNodeSearchable.h"
 
 /**
@@ -42,7 +43,7 @@ ParseNodeDrawable::ParseNodeDrawable(ParseNodeDrawable *parent, const string& li
                     }
                 }
                 if (parenthesisCount == 0 && !childLine.empty()){
-                    children.emplace_back(new ParseNodeDrawable(this, Word::trim(childLine), false, depth + 1));
+                    children.emplace_back(new ParseNodeDrawable(this, StringUtils::trim(childLine), false, depth + 1));
                     childLine = "";
                 }
             }
@@ -106,7 +107,7 @@ void ParseNodeDrawable::clearLayers() {
  * Recursive method to clear a given layer.
  * @param layerType Name of the layer to be cleared
  */
-void ParseNodeDrawable::clearLayer(ViewLayerType layerType) {
+void ParseNodeDrawable::clearLayer(ViewLayerType layerType) const {
     if (children.empty() && layerExists(layerType)){
         layers->removeLayer(layerType);
     }
@@ -194,7 +195,7 @@ int ParseNodeDrawable::getDepth() const{
  * @param parseNode Parse node to compare in structural manner
  * @return The number of structural agreement between this node and the given node recursively.
  */
-int ParseNodeDrawable::structureAgreementCount(ParseNodeDrawable *parseNode) const{
+int ParseNodeDrawable::structureAgreementCount(const ParseNodeDrawable *parseNode) const{
     if (children.size() > 1){
         int sum = 1;
         for (int i = 0; i < children.size(); i++){
@@ -233,7 +234,7 @@ int ParseNodeDrawable::structureAgreementCount(ParseNodeDrawable *parseNode) con
  * @param viewLayerType Layer name to compare
  * @return The number of gloss agreements between this node and the given node recursively.
  */
-int ParseNodeDrawable::glossAgreementCount(ParseNodeDrawable* parseNode, ViewLayerType viewLayerType) const{
+int ParseNodeDrawable::glossAgreementCount(const ParseNodeDrawable* parseNode, ViewLayerType viewLayerType) const{
     if (children.empty()){
         if (parseNode->numberOfChildren() == 0){
             if (getLayerData(viewLayerType) == parseNode->getLayerData(viewLayerType)){
@@ -257,7 +258,7 @@ int ParseNodeDrawable::glossAgreementCount(ParseNodeDrawable* parseNode, ViewLay
 
 /**
  * Recursive method which updates the depth attribute
- * @param depth Current depth to set.
+ * @param _depth Current depth to set.
  */
 void ParseNodeDrawable::updateDepths(int _depth){
     this->depth = _depth;
@@ -386,7 +387,7 @@ string ParseNodeDrawable::toTurkishSentence() const{
  * @param gazetteer Gazetteer where we search the word
  * @param word Word to be searched in the gazetter
  */
-void ParseNodeDrawable::checkGazetteer(Gazetteer& gazetteer, const string& word){
+void ParseNodeDrawable::checkGazetteer(const Gazetteer& gazetteer, const string& word) const {
     if (gazetteer.contains(word) && getParent()->getData().getName() == "NNP"){
         getLayerInfo()->setLayerData(ViewLayerType::NER, gazetteer.getName());
     }
@@ -420,7 +421,7 @@ string ParseNodeDrawable::to_string() const{
  * @param node Node containing the search condition
  * @return True if the node satisfies the condition, false otherwise.
  */
-bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node) const{
+bool ParseNodeDrawable::satisfy(const ParseNodeSearchable* node) const{
     int i;
     if (node->isLeaf() && children.size() > 0)
         return false;
@@ -453,12 +454,12 @@ bool ParseNodeDrawable::satisfy(ParseNodeSearchable* node) const{
                 }
                 break;
             case SearchType::STARTS:
-                if (!Word::startsWith(getLayerData(viewLayer), data)) {
+                if (!StringUtils::startsWith(getLayerData(viewLayer), data)) {
                     return false;
                 }
                 break;
             case SearchType::ENDS:
-                if (!Word::endsWith(getLayerData(viewLayer), data)) {
+                if (!StringUtils::endsWith(getLayerData(viewLayer), data)) {
                     return false;
                 }
                 break;

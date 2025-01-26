@@ -5,6 +5,7 @@
 #include <vector>
 #include "Dictionary/Word.h"
 #include "TurkishSemanticLayer.h"
+#include <StringUtils.h>
 
 /**
  * Constructor for the Turkish semantic layer. Sets semantic information for each word in
@@ -25,7 +26,7 @@ TurkishSemanticLayer::TurkishSemanticLayer(const string& layerValue) {
 void TurkishSemanticLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     if (!layerValue.empty()){
-        vector<string> splitMeanings = Word::split(layerValue, "$");
+        vector<string> splitMeanings = StringUtils::split(layerValue, "$");
         this->items = splitMeanings;
     }
 }

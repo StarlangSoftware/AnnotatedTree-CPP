@@ -3,6 +3,7 @@
 //
 
 #include "TargetLanguageWordLayer.h"
+#include <StringUtils.h>
 
 /**
  * Sets the surface form(s) of the word(s) possibly separated with space.
@@ -20,7 +21,7 @@ TargetLanguageWordLayer::TargetLanguageWordLayer(const string& layerValue) {
 void TargetLanguageWordLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     if (!layerValue.empty()){
-        vector<string> splitWords = Word::split(layerValue);
+        vector<string> splitWords = StringUtils::split(layerValue);
         items.insert(items.end(), splitWords.begin(), splitWords.end());
     }
 }

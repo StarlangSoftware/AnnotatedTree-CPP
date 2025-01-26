@@ -3,6 +3,7 @@
 //
 
 #include "MorphologicalAnalysisLayer.h"
+#include <StringUtils.h>
 
 /**
  * Constructor for the morphological analysis layer. Sets the morphological parse information for multiple words in
@@ -22,9 +23,9 @@ MorphologicalAnalysisLayer::MorphologicalAnalysisLayer(const string& layerValue)
 void MorphologicalAnalysisLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     if (!layerValue.empty()){
-        vector<string> splitWords = Word::split(layerValue);
+        vector<string> splitWords = StringUtils::split(layerValue);
         for (const string &word:splitWords){
-            items.emplace_back(MorphologicalParse(word));
+            items.emplace_back(word);
         }
     }
 }

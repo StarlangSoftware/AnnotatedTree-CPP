@@ -20,7 +20,8 @@ class AnnotatedTreeConan(ConanFile):
                 "senti_net/1.0.0",
                 "corpus/1.0.0",
                 "word_net/1.0.0",
-                "data_structure/1.0.0"]
+                "data_structure/1.0.0",
+                "util/1.0.0"]
     license = "GPL License"
     author = "Olcay Taner Yildiz olcay.yildiz@ozyegin.edu.tr"
     url = "https://github.com/StarlangSoftware/AnnotatedTree-CPP"

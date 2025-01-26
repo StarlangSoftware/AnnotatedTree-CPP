@@ -7,6 +7,7 @@
 //
 
 #include "ShallowParseLayer.h"
+#include <StringUtils.h>
 
 /**
  * Constructor for the shallow parse layer. Sets shallow parse information for each word in
@@ -27,7 +28,7 @@ ShallowParseLayer::ShallowParseLayer(const string& layerValue) {
 void ShallowParseLayer::setLayerValue(const string& layerValue) {
     this->layerValue = layerValue;
     if (!layerValue.empty()){
-        vector<string> splitParse = Word::split(layerValue);
+        vector<string> splitParse = StringUtils::split(layerValue);
         items = splitParse;
     }
 }

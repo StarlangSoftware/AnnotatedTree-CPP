@@ -3,6 +3,7 @@
 //
 
 #include "ModifyTags.h"
+#include <StringUtils.h>
 
 void ModifyTags::modifier(ParseNodeDrawable *parseNode) {
     LayerInfo* layerInfo = parseNode->getLayerInfo();
@@ -21,7 +22,7 @@ void ModifyTags::modifier(ParseNodeDrawable *parseNode) {
         }
     } else {
         parseNode->setData(parseNode->getData().trimSymbol());
-        if (Word::startsWith(parseNode->getData().getName(), "VB")){
+        if (StringUtils::startsWith(parseNode->getData().getName(), "VB")){
             parseNode->setData(Symbol("VB"));
         }
     }

@@ -76,7 +76,7 @@ ParseTreeDrawable* TreeBankDrawable::get(const string& fileName) const{
  * Clears the given layer for all nodes in all trees
  * @param layerType Layer name
  */
-void TreeBankDrawable::clearLayer(ViewLayerType layerType) {
+void TreeBankDrawable::clearLayer(ViewLayerType layerType) const {
     for (ParseTree* tree:parseTrees){
         auto* parseTree = (ParseTreeDrawable*) tree;
         parseTree->clearLayer(layerType);

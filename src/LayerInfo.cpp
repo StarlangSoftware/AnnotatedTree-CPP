@@ -3,6 +3,7 @@
 //
 
 #include "LayerInfo.h"
+#include <StringUtils.h>
 #include "Layer/TurkishWordLayer.h"
 #include "Layer/PersianWordLayer.h"
 #include "Layer/EnglishWordLayer.h"
@@ -16,7 +17,6 @@
 #include "Layer/EnglishSemanticLayer.h"
 #include "Layer/ShallowParseLayer.h"
 #include <vector>
-#include "Dictionary/Word.h"
 
 /**
  * Constructs the layer information from the given string. Layers are represented as
@@ -27,7 +27,7 @@
  * @param info Line consisting of layer info.
  */
 LayerInfo::LayerInfo(const string& info) {
-    vector<string> splitLayers = Word::split(info, "[{}]");
+    vector<string> splitLayers = StringUtils::split(info, "[{}]");
     for (const string &layer:splitLayers){
         if (layer.empty())
             continue;
@@ -596,7 +596,7 @@ AnnotatedWord *LayerInfo::toAnnotatedWord(int wordIndex) const{
         annotatedWord->setNamedEntityType(getLayerData(ViewLayerType::NER));
     }
     if (layerExists(ViewLayerType::PROPBANK)){
-        annotatedWord->setArgument(getArgument().to_string());
+        annotatedWord->setArgumentList(getArgument().to_string());
     }
     if (layerExists(ViewLayerType::SHALLOW_PARSE)){
         annotatedWord->setShallowParse(getShallowParseAt(wordIndex));
