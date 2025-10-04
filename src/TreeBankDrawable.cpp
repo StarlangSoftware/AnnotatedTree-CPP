@@ -4,6 +4,9 @@
 
 #include <fstream>
 #include "TreeBankDrawable.h"
+
+#include <filesystem>
+
 #include "ParseTreeDrawable.h"
 using std::filesystem::directory_iterator;
 
