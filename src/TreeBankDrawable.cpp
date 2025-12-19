@@ -30,7 +30,7 @@ TreeBankDrawable::TreeBankDrawable(const string& folder) {
             files.emplace_back(file.path());
         }
     }
-    sort(files.begin(), files.end());
+    ranges::sort(files);
     for (const string& file : files) {
         parseTreeFile.open(file, ifstream::in);
         auto* parseTree = new ParseTreeDrawable(parseTreeFile);

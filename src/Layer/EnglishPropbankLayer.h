@@ -7,7 +7,6 @@
 
 
 #include <Argument.h>
-#include "Dictionary/Word.h"
 #include <vector>
 #include "SingleWordMultiItemLayer.h"
 

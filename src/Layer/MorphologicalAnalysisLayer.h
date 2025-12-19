@@ -14,10 +14,10 @@ public:
     explicit MorphologicalAnalysisLayer(const string& layerValue);
     void setLayerValue(const string& layerValue) override;
     void setLayerValue(const MorphologicalParse& parse);
-    int getLayerSize(ViewLayerType viewLayer) const override;
-    string getLayerInfoAt(ViewLayerType viewLayer, int index) const override;
-    bool isVerbal() const;
-    bool isNominal() const;
+    [[nodiscard]] int getLayerSize(ViewLayerType viewLayer) const override;
+    [[nodiscard]] string getLayerInfoAt(ViewLayerType viewLayer, int index) const override;
+    [[nodiscard]] bool isVerbal() const;
+    [[nodiscard]] bool isNominal() const;
 };
 
 #endif //ANNOTATEDTREE_MORPHOLOGICALANALYSISLAYER_H

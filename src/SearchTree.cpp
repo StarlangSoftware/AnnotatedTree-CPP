@@ -21,7 +21,7 @@ SearchTree::SearchTree(const string& fileName) {
             while (nextNode->getName() != "node" && nextNode->getName() != "leaf"){
                 nextNode = nextNode->getNextSibling();
             }
-            searchTrees.emplace_back(ParseTreeSearchable(nextNode));
+            searchTrees.emplace_back(nextNode);
         }
         parseNode = parseNode->getNextSibling();
     }
@@ -33,12 +33,13 @@ SearchTree::SearchTree(const string& fileName) {
  * @param tree Tree in which search operation will be done
  * @return ParseNodes in the given tree that satisfy all conditions given in the search trees.
  */
-vector<ParseNode *> SearchTree::satisfy(const ParseTreeDrawable& tree) {
+vector<ParseNode *> SearchTree::satisfy(const ParseTreeDrawable& tree) const {
     vector<ParseNodeDrawable*> tmpResult;
     for (const ParseTreeSearchable& treeSearchable:searchTrees){
         tmpResult = tree.satisfy(treeSearchable);
         if (!tmpResult.empty()){
             vector<ParseNode*> result;
+            result.reserve(tmpResult.size());
             for (ParseNodeDrawable* parseNodeDrawable: tmpResult){
                 result.emplace_back(parseNodeDrawable);
             }

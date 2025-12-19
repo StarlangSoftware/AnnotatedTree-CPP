@@ -15,7 +15,7 @@ private:
 public:
     explicit NERLayer(const string& layerValue);
     void setLayerValue(const string& layerValue);
-    string getLayerValue() const;
+    [[nodiscard]] string getLayerValue() const;
 };
 
 

@@ -13,7 +13,7 @@ private:
     string symbol;
 public:
     explicit IsNodeWithSymbol(const string& symbol);
-    bool satisfies(ParseNodeDrawable* parseNode) const;
+    bool satisfies(const ParseNodeDrawable* parseNode) const;
 };
 
 

@@ -8,7 +8,7 @@
  * Stores the wordnet for checking the pos tag of the synset.
  * @param wordNet Wordnet used for checking the pos tag of the synset.
  */
-IsVerbNode::IsVerbNode(WordNet& wordNet) {
+IsVerbNode::IsVerbNode(const WordNet& wordNet) {
     this->wordNet = wordNet;
 }
 

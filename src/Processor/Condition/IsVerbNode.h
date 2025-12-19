@@ -11,7 +11,7 @@ class IsVerbNode : public IsLeafNode{
 private:
     WordNet wordNet;
 public:
-    explicit IsVerbNode(WordNet& wordNet);
+    explicit IsVerbNode(const WordNet& wordNet);
     bool satisfies(ParseNodeDrawable* parseNode) override;
 };
 

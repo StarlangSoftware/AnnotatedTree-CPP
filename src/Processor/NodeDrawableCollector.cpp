@@ -19,7 +19,7 @@ NodeDrawableCollector::NodeDrawableCollector(ParseNodeDrawable *rootNode, NodeDr
 /**
  * Private recursive method to check all descendants of the parseNode, if they ever satisfy the given node condition
  * @param parseNode Root node of the subtree
- * @param collected The {@link ArrayList} where the collected ParseNode's will be stored.
+ * @param collected The list where the collected ParseNode's will be stored.
  */
 void NodeDrawableCollector::collectNodes(ParseNodeDrawable *parseNode, vector<ParseNodeDrawable *>& collected) const{
     if (condition == nullptr || condition->satisfies(parseNode)){

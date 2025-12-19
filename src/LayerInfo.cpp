@@ -424,7 +424,7 @@ string LayerInfo::getLayerInfoAt(ViewLayerType viewLayer, int index) const{
 string LayerInfo::getLayerDescription(){
     string result;
     map<ViewLayerType, WordLayer*>::iterator layerIterator;
-    for (layerIterator = layers.begin(); layerIterator != layers.end(); layerIterator++){
+    for (layerIterator = layers.begin(); layerIterator != layers.end(); ++layerIterator){
         if (layerIterator->first != ViewLayerType::PART_OF_SPEECH){
             result += layerIterator->second->getLayerDescription();
         }
@@ -606,7 +606,7 @@ AnnotatedWord *LayerInfo::toAnnotatedWord(int wordIndex) const{
 
 LayerInfo::~LayerInfo() {
     map<ViewLayerType, WordLayer*>::iterator iterator;
-    for (iterator = layers.begin(); iterator != layers.end(); iterator++){
+    for (iterator = layers.begin(); iterator != layers.end(); ++iterator){
         delete iterator->second;
     }
 }

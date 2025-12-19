@@ -30,7 +30,6 @@ template<class T> T SingleWordMultiItemLayer<T>::getItemAt(int index) {
 
 /**
  * Returns the total number of properties for the word in the node.
- * @param viewLayer Not used.
  * @return Total number of properties for the word in the node.
  */
 template<class T> int SingleWordMultiItemLayer<T>::getLayerSize() {

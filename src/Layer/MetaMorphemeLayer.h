@@ -12,7 +12,7 @@ class MetaMorphemeLayer : public MetaMorphemesMovedLayer {
 public:
     explicit MetaMorphemeLayer(const string &layerValue);
     void setLayerValue(const MetamorphicParse& parse);
-    string getLayerInfoFrom(int index) const;
+    [[nodiscard]] string getLayerInfoFrom(int index) const;
     MetamorphicParse metaMorphemeRemoveFromIndex(int index);
 };
 

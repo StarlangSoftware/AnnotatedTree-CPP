@@ -17,7 +17,7 @@ IsNodeWithSymbol::IsNodeWithSymbol(const string& symbol) {
  * @param parseNode Parse node to check.
  * @return True if the tag of the parse node is equal to the given symbol, false otherwise.
  */
-bool IsNodeWithSymbol::satisfies(ParseNodeDrawable* parseNode) const{
+bool IsNodeWithSymbol::satisfies(const ParseNodeDrawable* parseNode) const{
     if (parseNode->numberOfChildren() > 0){
         return parseNode->getData().to_string() == symbol;
     } else {

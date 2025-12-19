@@ -15,7 +15,7 @@ private:
     void collectNodes(ParseNodeDrawable* parseNode, vector<ParseNodeDrawable*>& collected) const;
 public:
     NodeDrawableCollector(ParseNodeDrawable* rootNode, NodeDrawableCondition* condition);
-    vector<ParseNodeDrawable*> collect() const;
+    [[nodiscard]] vector<ParseNodeDrawable*> collect() const;
 };
 
 

@@ -15,8 +15,8 @@ private:
 public:
     explicit TurkishPropbankLayer(const string& layerValue);
     void setLayerValue(const string& layerValue);
-    Argument getArgument() const;
-    string getLayerValue() const;
+    [[nodiscard]] Argument getArgument() const;
+    [[nodiscard]] string getLayerValue() const;
 };
 
 

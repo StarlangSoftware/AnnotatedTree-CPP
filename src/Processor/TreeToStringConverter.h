@@ -15,7 +15,7 @@ private:
     ParseTreeDrawable* parseTree;
     string convertToString(ParseNodeDrawable* parseNode) const;
 public:
-    string convert() const;
+    [[nodiscard]] string convert() const;
     TreeToStringConverter(ParseTreeDrawable* parseTree, LeafToStringConverter* converter);
 };
 
